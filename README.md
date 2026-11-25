@@ -3,7 +3,7 @@
 Code, settings, seeds, data and results behind the paper
 
 I. Jahan, M. S. Israt and M. T. Islam, "Consistency-Conditioned Conformal Prediction for Residential Net Load
-Forecasting under Abrupt Shifts, with Application to Home Battery Reserves," in *Proc. 29th Int. Conf. Computer
+Forecasting under Abrupt Shifts with Application to Home Battery Reserves," in *Proc. 29th Int. Conf. Computer
 and Information Technology (ICCIT)*, Cox's Bazar, Bangladesh, Dec. 2026.
 
 Three result files (`Additional_Analyses/final3/<run>/event_rows_test.csv.gz`, about 134 MB each) exceed

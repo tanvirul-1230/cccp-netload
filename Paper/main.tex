@@ -32,11 +32,11 @@
     \put(0,\LenToUnit{10.5pt}){\footnotesize 18-20 December 2026, Cox's Bazar, Bangladesh}}%
   \AtTextLowerLeft{\put(0,\LenToUnit{-24pt}){\footnotesize 979-8-3195-0171-4/26/\$31.00~\copyright2026~IEEE}}}
 
-\title{Consistency-Conditioned Conformal Prediction for Residential Net Load Forecasting under Abrupt Shifts,
+\title{Consistency-Conditioned Conformal Prediction for Residential Net Load Forecasting under Abrupt Shifts
 with Application to Home Battery Reserves}
 
 \author{\IEEEauthorblockN{Ishrat Jahan, Mst. Sania Israt and Md. Tanvirul Islam}
-\IEEEauthorblockA{Dept. of Electrical \& Electronic Engineering, Rajshahi University of Engineering \& Technology\\
+\IEEEauthorblockA{\textit{Department of Electrical \& Electronic Engineering}\\ \textit{Rajshahi University of Engineering \& Technology,}\\
 Rajshahi-6204, Bangladesh\\
 ishraturmi343@gmail.com, sanianuha53@gmail.com, mahinblackbox@gmail.com}}
 
@@ -80,9 +80,9 @@ evidence available at the issue time.
 quantile regression, and Faustine and Pereira \cite[Sec.~II-A]{faustine} apply split
 conformal prediction to substation net load. Cheng \emph{et al.} \cite{cheng} feed an online conformal net-load
 bound into battery scheduling and report coverage in ten synthetic stress events, and Nesterov \cite{nesterov} proposes a regime-wise
-conformal calibration of net-load intervals on the same data package. For PV power, adaptive conformal
-inference (ACI) has been combined with a daily reset \cite{suresh}, and Ili\'c \emph{et al.} \cite{ilic} trigger retraining by an
-out-of-distribution test on the inputs, where soiled samples largely overlap normal data.
+conformal calibration of net-load intervals on the same data. For PV power, adaptive conformal
+inference (ACI) has been run with a daily reset \cite{suresh}, and Ili\'c \emph{et al.} \cite{ilic} trigger retraining by an
+input out-of-distribution test, where soiled samples largely overlap normal data.
 
 \emph{Normalised and adaptive conformal prediction.} The nonconformity score has been divided by an estimated
 residual spread \cite[Sec.~5.2]{lei} or a neural-network error model \cite[eq.~(16)]{papadopoulos11}, and weighted
@@ -90,8 +90,8 @@ quantiles limit the coverage loss under drift \cite[Sec.~3.1]{barber}. ACI \cite
 miscoverage level after each coverage error, with the step tuned online \cite[Sec.~2.3]{gibbs24} or extended by
 error integration and scorecasting \cite[Sec.~2]{angelopoulos}. Sun and Yu \cite{sunyu} condition online intervals
 on a predicted discrete state. Closest in form, Chin \cite[eqs.~(2), (4)]{chin} divides the score by
-$1+\lambda|R(x)|$, with $R$ a partial-differential-equation residual, and by a Monte Carlo dropout scale.
-Table~\ref{tab:lit} compares these works.
+$1+\lambda|R(x)|$, with $R$ a differential-equation residual, and by a dropout scale.
+Table~\ref{tab:lit} compares them.
 
 \begin{table*}[t]
 \caption{Selected conformal and probabilistic forecasting studies related to this work}

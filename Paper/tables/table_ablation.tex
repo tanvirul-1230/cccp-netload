@@ -1,0 +1,23 @@
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\multirow{2}{*}{Signal} & \multirow{2}{*}{$\beta$} & \multicolumn{2}{c|}{Net adaptation} & Score vs.\\
+\cline{3-4}
+ & & PV loss & Load step & LACP\\
+\hline
+\multicolumn{5}{|l|}{\emph{Scale $1+\beta\tilde\rho_t$ (CC-CP)}}\\
+\quad None (SCP) & -- & +0.000 & +0.000 & +20.3\%\\
+\quad PV and load & 1 & +0.192$^{*}$ & +0.090$^{*}$ & +13.2\%\\
+\quad PV only & 1 & +0.285$^{*}$ & +0.000 & +12.6\%\\
+\quad Load only & 0.25 & +0.000 & +0.022$^{*}$ & +17.6\%\\
+\quad Load model, day lag only & 1 & +0.210$^{*}$ & +0.063$^{*}$ & +11.4\%\\
+\quad Both, day lag only & 0.25 & $-$0.010 & +0.056$^{*}$ & +17.2\%\\
+\quad Persistence residual & 1 & +0.133$^{*}$ & +0.059$^{*}$ & +17.1\%\\
+\hline
+\multicolumn{5}{|l|}{\emph{Scale $s(x_t)(1+\beta\tilde\rho_t)$ (CC-LACP)}}\\
+\quad None (LACP) & -- & $-$0.021$^{*}$ & +0.114$^{*}$ & 0\\
+\quad PV and load & 0.25 & +0.039$^{*}$ & +0.114$^{*}$ & $-$3.4\%\\
+\quad PV only & 0.25 & +0.045$^{*}$ & +0.107$^{*}$ & $-$3.5\%\\
+\quad Persistence residual & 0.25 & +0.011 & +0.110$^{*}$ & $-$0.9\%\\
+\quad Indicator $\mathbf{1}\{\tilde\rho_t>\tau\}$ & 0.5, $\tau=q_{80}$ & +0.033$^{*}$ & +0.122$^{*}$ & $-$2.7\%\\
+\hline
+\end{tabular}

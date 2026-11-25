@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.aux
+*.log
+*.blg
+*.out
+# release files (fetch_results.sh)
+Additional_Analyses/final3/v3_tree/event_rows_test.csv.gz
+Additional_Analyses/final3/v3_mlp/event_rows_test.csv.gz
+Additional_Analyses/final3/v3_tree_clip/event_rows_test.csv.gz

@@ -1,0 +1,232 @@
+events: extended 1620 frozen 161 development 810
+            loss  ratio_15min  ratio_30min  ratio_60min  pv99_over_R  net_min  pv_max
+Household                                                                            
+H3         0.811        1.435        1.185        1.056        0.479    -3.80   3.956
+H4         1.234        1.164        0.869        0.720        0.480    -8.16   8.224
+H6         0.980        4.893        3.286        2.616        1.007    -2.80   7.712
+                              start                 train_end                  tune_end                   dev_end                   cal_end                       end
+Household                                                                                                                                                            
+H3        2016-02-28 17:30:00+00:00 2016-10-24 21:30:00+00:00 2016-12-13 08:45:00+00:00 2017-01-29 01:15:00+00:00 2017-03-16 17:45:00+00:00 2017-07-08 15:45:00+00:00
+H4        2015-10-10 16:45:00+00:00 2016-12-28 15:30:00+00:00 2017-03-20 13:15:00+00:00 2017-06-08 21:30:00+00:00 2017-08-28 05:30:00+00:00 2018-02-04 23:00:00+00:00
+H6        2016-05-13 13:45:00+00:00 2017-04-26 06:15:00+00:00 2017-07-04 19:00:00+00:00 2017-09-12 07:45:00+00:00 2017-11-20 20:30:00+00:00 2018-04-08 22:00:00+00:00
+
+Table II data
+                         method   cPICP    cNIS    cRel   iPICP     iH3     iH4     iH6   iPool    iRel  iRelLo  iRelHi  tripPICP    trip  tripLo  tripHi  evPICP      ev    evLo    evHi
+key                                                                                                                                                                                     
+SCP                        SCP  0.8730  0.2815  0.0375  0.7176  0.3411  0.4019  1.3644  0.7024  0.2034  0.1640  0.2510    0.6543  0.1486  0.1144  0.1886  0.0500  0.1307  0.1048  0.1625
+LACP                      LACP  0.8618  0.2717  0.0000  0.7998  0.3148  0.3741  0.9393  0.5427  0.0000     NaN     NaN    0.7109  0.0000     NaN     NaN  0.0891  0.0000     NaN     NaN
+ACItuned             ACI|tuned  0.8997  0.2807  0.0335  0.7716  0.3435  0.3896  1.1868  0.6400  0.1320  0.0984  0.1735    0.7065  0.1451  0.1048  0.1984  0.0920 -0.0190 -0.0540  0.0205
+ACI                   ACI|g0.2  0.8692  0.2946  0.0870  0.8455  0.3934  0.3889  0.7725  0.5183  0.0372 -0.0016  0.0875    0.8348 -0.0196 -0.1282  0.1369  0.5239 -0.5060 -0.5325 -0.4743
+CCCP                     CC|b1  0.8748  0.2695 -0.0098  0.7805  0.3486  0.3834  1.1860  0.6393  0.1316  0.0974  0.1720    0.7804  0.2244  0.0928  0.4190  0.4014 -0.4359 -0.4667 -0.4018
+CCLACP            CCLACP|b0.25  0.8577  0.2750  0.0110  0.8306  0.3218  0.3633  0.8490  0.5114 -0.0343 -0.0457 -0.0229    0.7732 -0.0405 -0.0930  0.0278  0.2406 -0.2911 -0.3121 -0.2706
+ACICC                 ACI|g0.2  0.8692  0.2946  0.0870  0.8455  0.3934  0.3889  0.7725  0.5183  0.0372 -0.0022  0.0856    0.8348 -0.0196 -0.1237  0.1368  0.5239 -0.5060 -0.5332 -0.4737
+WM                   WM-CCLACP     NaN     NaN     NaN  0.8316  0.3134  0.3558  0.8443  0.5045 -0.0516 -0.0627 -0.0403    0.7746 -0.0569 -0.1084  0.0151  0.2507 -0.2976 -0.3186 -0.2759
+ACIL                ACIL|g0.02  0.8995  0.2806  0.0309  0.8495  0.3454  0.3724  0.8897  0.5359  0.0133 -0.0154  0.0448    0.7768  0.0262 -0.0662  0.1661  0.3486 -0.3166 -0.3541 -0.2745
+ACICCL      ACICCL|b0.25|g0.01  0.9003  0.2825  0.0357  0.8622  0.3499  0.3860  0.8816  0.5391  0.0272  0.0029  0.0534    0.8065  0.0535 -0.0460  0.1988  0.4138 -0.4514 -0.4834 -0.4195
+ROLLSCP               ROLL|SCP  0.8977  0.2785  0.0250  0.7589  0.3324  0.3922  1.2881  0.6709  0.1585  0.1252  0.1995    0.6899  0.1126  0.0799  0.1539  0.0507  0.0848  0.0599  0.1146
+ROLLLACP             ROLL|LACP  0.8965  0.2708 -0.0054  0.8342  0.3169  0.3627  0.9553  0.5450 -0.0023 -0.0154  0.0127    0.7457 -0.0514 -0.0848 -0.0043  0.1232 -0.1059 -0.1253 -0.0849
+ROLLCCLACP   ROLL|CCLACP|b0.25  0.8961  0.2758  0.0117  0.8601  0.3324  0.3730  0.8705  0.5253 -0.0067 -0.0265  0.0136    0.8109 -0.0323 -0.1133  0.0782  0.3348 -0.3904 -0.4147 -0.3644
+  3.7-kW steps, ROLLCCLACP vs ROLLLACP: $-$32.3\% [$-$34.4\%, $-$30.1\%]
+  3.7-kW steps, ACICCL vs ACIL: $-$20.3\% [$-$23.4\%, $-$16.9\%]
+
+Relative inside-event nIS change (household mean) and pooled paired differences
+  CCLACPvsLACP   H3 +2.2\% [+0.4\%, +4.0\%]  H4 $-$2.9\% [$-$4.7\%, $-$1.2\%]  H6 $-$9.6\% [$-$11.9\%, $-$7.4\%] | mean $-$3.4\% [$-$4.6\%, $-$2.3\%] | pooled diff $-$0.031 [$-$0.045, $-$0.019]
+  CCLACPvsACI    H3 $-$18.2\% [$-$21.2\%, $-$15.2\%]  H4 $-$6.6\% [$-$10.6\%, $-$2.5\%]  H6 +9.9\% [$-$5.0\%, +24.5\%] | mean $-$5.0\% [$-$10.4\%, +0.3\%] | pooled diff $-$0.007 [$-$0.046, +0.044]
+  ACIvsLACP      H3 +25.0\% [+20.3\%, +30.4\%]  H4 +4.0\% [$-$1.0\%, +9.5\%]  H6 $-$17.8\% [$-$27.3\%, $-$5.0\%] | mean +3.7\% [$-$0.1\%, +8.7\%] | pooled diff $-$0.024 [$-$0.085, +0.023]
+  CCLACPvsWM     H3 +2.7\% [+1.9\%, +3.6\%]  H4 +2.1\% [+1.3\%, +2.9\%]  H6 +0.6\% [+0.3\%, +1.0\%] | mean +1.8\% [+1.4\%, +2.2\%] | pooled diff +0.007 [+0.005, +0.009]
+  CCCPvsLACP     H3 +10.7\% [+6.6\%, +15.6\%]  H4 +2.5\% [$-$1.9\%, +7.1\%]  H6 +26.3\% [+18.3\%, +37.2\%] | mean +13.2\% [+9.9\%, +17.2\%] | pooled diff +0.097 [+0.068, +0.132]
+  CCCPvsACI      H3 $-$11.4\% [$-$15.0\%, $-$7.8\%]  H4 $-$1.4\% [$-$5.9\%, +3.1\%]  H6 +53.5\% [+34.8\%, +71.9\%] | mean +13.6\% [+7.2\%, +20.0\%] | pooled diff +0.121 [+0.054, +0.203]
+  ACICCvsACI     H3 +0.0\% [+0.0\%, +0.0\%]  H4 +0.0\% [+0.0\%, +0.0\%]  H6 +0.0\% [+0.0\%, +0.0\%] | mean +0.0\% [+0.0\%, +0.0\%] | pooled diff +0.000 [+0.000, +0.000]
+  ACItunedvsACI  H3 $-$12.7\% [$-$16.4\%, $-$8.8\%]  H4 +0.2\% [$-$5.6\%, +6.1\%]  H6 +53.6\% [+39.4\%, +67.9\%] | mean +13.7\% [+8.5\%, +18.8\%] | pooled diff +0.122 [+0.064, +0.188]
+  CCLACPvsACIL   H3 $-$6.8\% [$-$9.6\%, $-$4.2\%]  H4 $-$2.4\% [$-$6.3\%, +1.3\%]  H6 $-$4.6\% [$-$12.3\%, +4.0\%] | mean $-$4.6\% [$-$7.7\%, $-$1.4\%] | pooled diff $-$0.024 [$-$0.050, +0.002]
+  CCLACPvsROLLLACP H3 +1.6\% [$-$0.1\%, +3.1\%]  H4 +0.2\% [$-$2.8\%, +3.0\%]  H6 $-$11.1\% [$-$14.2\%, $-$7.8\%] | mean $-$3.1\% [$-$4.7\%, $-$1.6\%] | pooled diff $-$0.034 [$-$0.053, $-$0.017]
+  ACICCLvsACIL   H3 +1.3\% [$-$0.8\%, +3.4\%]  H4 +3.7\% [+1.7\%, +5.8\%]  H6 $-$0.9\% [$-$5.8\%, +4.3\%] | mean +1.3\% [$-$0.6\%, +3.4\%] | pooled diff +0.003 [$-$0.011, +0.020]
+  ROLLCCLACPvsROLLLACP H3 +4.9\% [+3.2\%, +6.5\%]  H4 +2.8\% [+0.7\%, +5.1\%]  H6 $-$8.9\% [$-$11.2\%, $-$6.6\%] | mean $-$0.4\% [$-$1.6\%, +0.8\%] | pooled diff $-$0.020 [$-$0.033, $-$0.007]
+  ACILvsLACP     H3 +9.7\% [+6.4\%, +13.6\%]  H4 $-$0.5\% [$-$4.6\%, +4.2\%]  H6 $-$5.3\% [$-$11.7\%, +1.9\%] | mean +1.3\% [$-$1.4\%, +4.5\%] | pooled diff $-$0.007 [$-$0.036, +0.016]
+  ACICCLvsLACP   H3 +11.1\% [+7.5\%, +14.9\%]  H4 +3.2\% [$-$1.8\%, +8.7\%]  H6 $-$6.1\% [$-$9.9\%, $-$1.7\%] | mean +2.7\% [+0.4\%, +5.3\%] | pooled diff $-$0.004 [$-$0.021, +0.012]
+  ROLLLACPvsLACP H3 +0.7\% [$-$1.1\%, +2.5\%]  H4 $-$3.0\% [$-$6.1\%, +0.3\%]  H6 +1.7\% [$-$0.6\%, +3.9\%] | mean $-$0.2\% [$-$1.6\%, +1.2\%] | pooled diff +0.002 [$-$0.006, +0.011]
+  clean rel CCLACP vs LACP: H3 $-$1.7\%  H4 +0.8\%  H6 +4.3\% mean +1.1\%
+  clean rel ACI vs LACP: H3 +15.4\%  H4 +9.0\%  H6 +1.8\% mean +8.7\%
+  clean rel CCCP vs LACP: H3 +4.3\%  H4 +2.5\%  H6 $-$9.8\% mean $-$1.0\%
+  clean rel ACItuned vs LACP: H3 +11.2\%  H4 +6.3\%  H6 $-$7.5\% mean +3.3\%
+  clean rel ACIL vs LACP: H3 +3.1\%  H4 +4.7\%  H6 +1.5\% mean +3.1\%
+  clean rel ACICCL vs LACP: H3 +1.3\%  H4 +5.9\%  H6 +3.6\% mean +3.6\%
+  clean rel ROLLLACP vs LACP: H3 $-$0.9\%  H4 +1.0\%  H6 $-$1.7\% mean $-$0.5\%
+  clean rel ROLLCCLACP vs LACP: H3 $-$1.1\%  H4 +3.0\%  H6 +1.7\% mean +1.2\%
+  clean rel ROLLSCP vs LACP: H3 +11.1\%  H4 +6.1\%  H6 $-$9.7\% mean +2.5\%
+  clean rel ACICC vs LACP: H3 +15.4\%  H4 +9.0\%  H6 +1.8\% mean +8.7\%
+  DM CCLACP vs LACP, 24 lags: lower/equal/higher score 2/4/3
+  DM CCLACP vs LACP, 96 lags: lower/equal/higher score 2/4/3
+  DM CCLACP vs ACI, 24 lags: lower/equal/higher score 6/3/0
+  DM CCLACP vs ACI, 96 lags: lower/equal/higher score 6/3/0
+  DM CCCP vs ACI, 24 lags: lower/equal/higher score 7/2/0
+  DM CCCP vs ACI, 96 lags: lower/equal/higher score 7/2/0
+  DM CCCP vs LACP, 24 lags: lower/equal/higher score 3/3/3
+  DM CCCP vs LACP, 96 lags: lower/equal/higher score 3/3/3
+  DM CCLACP vs ACIL, 24 lags: lower/equal/higher score 4/4/1
+  DM CCLACP vs ACIL, 96 lags: lower/equal/higher score 4/3/2
+  DM CCLACP vs ROLLLACP, 24 lags: lower/equal/higher score 1/5/3
+  DM CCLACP vs ROLLLACP, 96 lags: lower/equal/higher score 2/4/3
+  DM ACICCL vs ACIL, 24 lags: lower/equal/higher score 3/2/4
+  DM ACICCL vs ACIL, 96 lags: lower/equal/higher score 3/2/4
+  DM ROLLCCLACP vs ROLLLACP, 24 lags: lower/equal/higher score 0/6/3
+  DM ROLLCCLACP vs ROLLLACP, 96 lags: lower/equal/higher score 0/6/3
+  load-step inside nIS: {'SCP': np.float64(0.357), 'LACP': np.float64(0.316), 'ACItuned': np.float64(0.352), 'ACI': np.float64(0.355), 'CCCP': np.float64(0.35), 'CCLACP': np.float64(0.32), 'ACICC': np.float64(0.355), 'ACIL': np.float64(0.333), 'ACICCL': np.float64(0.335), 'ROLLSCP': np.float64(0.345), 'ROLLLACP': np.float64(0.318), 'ROLLCCLACP': np.float64(0.327)}
+
+Fig. 2 data
+ panel  method household   value      lo      hi  narrower
+    a    LACP        H3 -0.0415 -0.0538 -0.0302    0.6438
+    a    LACP        H4 -0.0985 -0.1195 -0.0770    0.7604
+    a    LACP        H6  0.1113  0.0459  0.1802    0.4229
+    a    LACP    Pooled -0.0095 -0.0340  0.0163    0.6090
+    a CC-LACP        H3  0.0247  0.0053  0.0439    0.3667
+    a CC-LACP        H4 -0.0509 -0.0735 -0.0294    0.6000
+    a CC-LACP        H6  0.1553  0.0903  0.2220    0.3542
+    a CC-LACP    Pooled  0.0430  0.0173  0.0703    0.4403
+    a   CC-CP        H3  0.1837  0.1399  0.2306    0.1938
+    a   CC-CP        H4  0.1322  0.1012  0.1645    0.2792
+    a   CC-CP        H6  0.1177  0.0716  0.1716    0.3438
+    a   CC-CP    Pooled  0.1446  0.1200  0.1699    0.2722
+    a     ACI        H3  0.1934  0.1044  0.2878    0.3250
+    a     ACI        H4  0.1122  0.0476  0.1768    0.2354
+    a     ACI        H6  0.9249  0.7526  1.0983    0.1333
+    a     ACI    Pooled  0.4102  0.3253  0.4981    0.2312
+    b CC-LACP        H3  0.0022 -0.0313  0.0343       NaN
+    b CC-LACP        H4 -0.0473 -0.0699 -0.0243       NaN
+    b CC-LACP        H6 -0.1001 -0.1372 -0.0651       NaN
+    b CC-LACP      Mean -0.0484 -0.0666 -0.0311       NaN
+    b   CC-CP        H3  0.0959  0.0409  0.1604       NaN
+    b   CC-CP        H4 -0.0040 -0.0735  0.0738       NaN
+    b   CC-CP        H6  0.2599  0.1587  0.4126       NaN
+    b   CC-CP      Mean  0.1172  0.0726  0.1774       NaN
+    b     ACI        H3  0.2521  0.1746  0.3439       NaN
+    b     ACI        H4  0.0474 -0.0414  0.1408       NaN
+    b     ACI        H6 -0.2081 -0.3238 -0.0139       NaN
+    b     ACI      Mean  0.0305 -0.0235  0.1078       NaN
+  log width CC-LACP - LACP, PV loss, H3: +0.066 [+0.049, +0.083]
+  log width CC-LACP - LACP, PV loss, H4: +0.048 [+0.035, +0.060]
+  log width CC-LACP - LACP, PV loss, H6: +0.044 [+0.026, +0.063]
+  log width CC-LACP - LACP, PV loss, severity 0.25: +0.002 [-0.005, +0.008]
+  log width CC-LACP - LACP, PV loss, severity 0.5: +0.048 [+0.035, +0.060]
+  log width CC-LACP - LACP, PV loss, severity 0.75: +0.108 [+0.089, +0.128]
+  extended: PV net CC-CP 0.192, ACI 0.185, diff +0.007 [-0.043, +0.054]
+  frozen: PV net CC-CP 0.222, ACI 0.118, diff +0.104 [-0.048, +0.254]
+
+Fig. 4 data
+  method  severity   value      lo      hi
+   LACP      0.25  0.0398  0.0104  0.0736
+   LACP      0.50 -0.0035 -0.0404  0.0376
+   LACP      0.75 -0.0649 -0.1110 -0.0172
+CC-LACP      0.25  0.0415  0.0103  0.0780
+CC-LACP      0.50  0.0443  0.0065  0.0866
+CC-LACP      0.75  0.0432 -0.0032  0.0951
+  CC-CP      0.25  0.0125 -0.0039  0.0297
+  CC-CP      0.50  0.1351  0.1009  0.1706
+  CC-CP      0.75  0.2861  0.2362  0.3370
+    ACI      0.25  0.2863  0.1682  0.4158
+    ACI      0.50  0.4141  0.3016  0.5270
+    ACI      0.75  0.5300  0.3921  0.6737
+
+Fig. 3 data
+    family             method  param  clean_rel  inside_rel  selected
+      ACI         ACI|g0.005  0.005     0.0263      0.1584     False
+      ACI          ACI|g0.01  0.010     0.0284      0.1556     False
+      ACI          ACI|g0.02  0.020     0.0345      0.1177     False
+      ACI          ACI|g0.05  0.050     0.0213      0.0414     False
+      ACI           ACI|g0.1  0.100     0.0278      0.0149     False
+      ACI           ACI|g0.2  0.200     0.0870      0.0372      True
+      ACI           ACI|g0.3  0.300     0.1496      0.0766     False
+      ACI           ACI|g0.5  0.500     0.2474      0.1322     False
+   ACI-CC ACICC|b0.25|g0.005  0.005    -0.0107      0.1155     False
+   ACI-CC  ACICC|b0.25|g0.01  0.010    -0.0061      0.1115     False
+   ACI-CC  ACICC|b0.25|g0.02  0.020     0.0062      0.0759     False
+   ACI-CC  ACICC|b0.25|g0.05  0.050     0.0178      0.0459     False
+   ACI-CC   ACICC|b0.25|g0.1  0.100     0.0384      0.0497     False
+   ACI-CC   ACICC|b0.25|g0.2  0.200     0.1075      0.0812     False
+   ACI-CC   ACICC|b0.25|g0.3  0.300     0.1696      0.1260     False
+   ACI-CC   ACICC|b0.25|g0.5  0.500     0.2645      0.1675     False
+ACI|tuned          ACI|tuned    NaN     0.0335      0.1320     False
+    CC-CP              CC|b0  0.000     0.0375      0.2034     False
+    CC-CP           CC|b0.25  0.250    -0.0010      0.1576     False
+    CC-CP            CC|b0.5  0.500    -0.0131      0.1391     False
+    CC-CP              CC|b1  1.000    -0.0098      0.1316      True
+    CC-CP              CC|b2  2.000     0.0422      0.1734     False
+    CC-CP              CC|b4  4.000     0.2049      0.3295     False
+  CC-LACP          CCLACP|b0  0.000     0.0000      0.0000     False
+  CC-LACP       CCLACP|b0.25  0.250     0.0110     -0.0343      True
+  CC-LACP        CCLACP|b0.5  0.500     0.0433     -0.0279     False
+  CC-LACP          CCLACP|b1  1.000     0.1272      0.0257     False
+  CC-LACP          CCLACP|b2  2.000     0.3269      0.2080     False
+      SCP                SCP    NaN     0.0375      0.2034     False
+
+Table III
+\multicolumn{5}{|l|}{\emph{Scale $1+\beta\tilde\rho_t$ (CC-CP)}}\\
+\quad None (SCP) & -- & +0.000 & +0.000 & +20.3\%\\
+\quad PV and load & 1 & +0.192$^{*}$ & +0.090$^{*}$ & +13.2\%\\
+\quad PV only & 1 & +0.285$^{*}$ & +0.000 & +12.6\%\\
+\quad Load only & 0.25 & +0.000 & +0.022$^{*}$ & +17.6\%\\
+\quad Load model, day lag only & 1 & +0.210$^{*}$ & +0.063$^{*}$ & +11.4\%\\
+\quad Both, day lag only & 0.25 & $-$0.010 & +0.056$^{*}$ & +17.2\%\\
+\quad Persistence residual & 1 & +0.133$^{*}$ & +0.059$^{*}$ & +17.1\%\\
+\hline
+\multicolumn{5}{|l|}{\emph{Scale $s(x_t)(1+\beta\tilde\rho_t)$ (CC-LACP)}}\\
+\quad None (LACP) & -- & $-$0.021$^{*}$ & +0.114$^{*}$ & 0\\
+\quad PV and load & 0.25 & +0.039$^{*}$ & +0.114$^{*}$ & $-$3.4\%\\
+\quad PV only & 0.25 & +0.045$^{*}$ & +0.107$^{*}$ & $-$3.5\%\\
+\quad Persistence residual & 0.25 & +0.011 & +0.110$^{*}$ & $-$0.9\%\\
+\quad Indicator $\mathbf{1}\{\tilde\rho_t>\tau\}$ & 0.5, $\tau=q_{80}$ & +0.033$^{*}$ & +0.122$^{*}$ & $-$2.7\%\\
+  robustness mlp: CC-LACP vs LACP $-$4.4\% [$-$6.4\%, $-$2.1\%] per {'H3': np.float64(0.052400387393326975), 'H4': np.float64(-0.03971944602147248), 'H6': np.float64(-0.14410777483319848)}; vs ACI $-$4.2\% [$-$7.3\%, $-$0.9\%] per {'H3': np.float64(-0.11520396543134281), 'H4': np.float64(-0.03107594014493631), 'H6': np.float64(0.019414597746596485)}; LACP PV log width -0.034 [-0.053,-0.015], narrower 0.60
+  robustness clip: CC-LACP vs LACP $-$2.2\% [$-$3.1\%, $-$1.2\%] per {'H3': np.float64(0.020754584734718362), 'H4': np.float64(-0.013439650003934323), 'H6': np.float64(-0.07281199065941502)}; vs ACI $-$1.9\% [$-$7.1\%, +3.2\%] per {'H3': np.float64(-0.1799575502606684), 'H4': np.float64(-0.073244571367169), 'H6': np.float64(0.19622298341068478)}; LACP PV log width -0.030 [-0.052,-0.006], narrower 0.61
+  frozen: CC-LACP vs LACP $-$3.2\% [$-$6.0\%, +0.7\%] per {'H3': np.float64(-0.00746517551099346), 'H4': np.float64(-0.006374116100657856), 'H6': np.float64(-0.08313202218127069)}
+  ACI gamma=0.2 clipped: PICP 0.8692  nIS 0.2946
+  ACI gamma=0.2 unclipped: PICP 0.9000  nIS 0.3980
+  reproduction error of stored clipped ACI: 4.4e-07
+  per-household selection H3 ACI: ACI|g0.02
+  per-household selection H3 CCLACP: CCLACP|b0
+  per-household selection H4 ACI: ACI|g0.1
+  per-household selection H4 CCLACP: CCLACP|b0.5
+  per-household selection H6 ACI: ACI|g0.2
+  per-household selection H6 CCLACP: CCLACP|b0
+  development ACI: admissible steps [0.1, 0.2]; smaller steps 5.4-11.2% above the best without injection
+selection: {'ACI': 'ACI|g0.2', 'CC': 'CC|b1', 'CCLACP': 'CCLACP|b0.25', 'ACICC': 'ACI|g0.2', 'ACIL': 'ACIL|g0.02', 'ACICCL': 'ACICCL|b0.25|g0.01', 'ROLLCCL': 'ROLL|CCLACP|b0.25', 'PVonlyL': 'PVonlyL|b0.25', 'PersistL': 'PersistL|b0.25', 'THL': 'THL|q80|b0.5', 'Persist': 'Persist|b1', 'PVonly': 'PVonly|b1', 'LoadOnly': 'LoadOnly|b0.25', 'LF-load': 'LF-load|b1', 'LF-both': 'LF-both|b0.25', 'LoadOnly-LF': 'LoadOnly-LF|b0.25'}
+  LOHO H3: CC-LACP CCLACP|b0.25, ACI ACI|g0.2; inside nIS vs LACP +2.2\%
+  LOHO H4: CC-LACP CCLACP|b0, ACI ACI|g0.1; inside nIS vs LACP +0.0\%
+  LOHO H6: CC-LACP CCLACP|b0.25, ACI ACI|g0.1; inside nIS vs LACP $-$9.6\%
+  selection with tol=0.01: CC-LACP CCLACP|b0.25, ACI ACI|g0.1, CC CC|b1
+  selection with tol=0.05: CC-LACP CCLACP|b0.5, ACI ACI|g0.2, CC CC|b2
+  rec: CCLACP vs LACP $-$5.4\% [$-$6.6\%, $-$4.1\%]
+  tgt: CCLACP vs LACP $-$3.4\% [$-$4.5\%, $-$2.5\%]
+  rec: CCCP vs LACP +7.6\% [+3.5\%, +11.8\%]
+  tgt: CCCP vs LACP +17.0\% [+13.8\%, +20.5\%]
+  rec: ACI vs LACP +4.0\% [+0.0\%, +8.6\%]
+  tgt: ACI vs LACP +12.6\% [+8.7\%, +17.0\%]
+  rec: ACIL vs LACP $-$4.4\% [$-$7.2\%, $-$1.2\%]
+  tgt: ACIL vs LACP $-$1.4\% [$-$3.7\%, +0.9\%]
+  rec: ACICCL vs LACP $-$8.0\% [$-$10.7\%, $-$5.3\%]
+  tgt: ACICCL vs LACP $-$1.9\% [$-$4.0\%, +0.1\%]
+  rec: ROLLLACP vs LACP $-$4.8\% [$-$6.6\%, $-$3.1\%]
+  tgt: ROLLLACP vs LACP $-$2.6\% [$-$3.8\%, $-$1.5\%]
+  rec: ROLLCCLACP vs LACP $-$8.1\% [$-$10.1\%, $-$6.0\%]
+  tgt: ROLLCCLACP vs LACP $-$4.2\% [$-$5.8\%, $-$2.6\%]
+  LACP: recovery PICP 0.659, all-target PICP 0.722, mean upper exceedance 196 W
+  CCLACP: recovery PICP 0.703, all-target PICP 0.748, mean upper exceedance 176 W
+  CCCP: recovery PICP 0.642, all-target PICP 0.697, mean upper exceedance 252 W
+  ACI: recovery PICP 0.700, all-target PICP 0.729, mean upper exceedance 207 W
+  ACIL: recovery PICP 0.737, all-target PICP 0.770, mean upper exceedance 166 W
+  ACICCL: recovery PICP 0.752, all-target PICP 0.783, mean upper exceedance 155 W
+  ROLLLACP: recovery PICP 0.713, all-target PICP 0.757, mean upper exceedance 176 W
+  ROLLCCLACP: recovery PICP 0.751, all-target PICP 0.779, mean upper exceedance 156 W
+  SCP: recovery PICP 0.548, all-target PICP 0.644, mean upper exceedance 291 W
+  placebo widening rate (1.25 x pre-event width), LACP: 0.411
+  placebo widening rate (1.25 x pre-event width), CCLACP: 0.459
+  placebo widening rate (1.25 x pre-event width), CCCP: 0.484
+  placebo widening rate (1.25 x pre-event width), ACI: 0.573
+  placebo widening rate (1.25 x pre-event width), ACItuned: 0.053
+  placebo widening rate (1.25 x pre-event width), ACIL: 0.433
+  placebo widening rate (1.25 x pre-event width), ACICCL: 0.457
+  placebo widening rate (1.25 x pre-event width), ROLLLACP: 0.411
+  placebo widening rate (1.25 x pre-event width), ROLLCCLACP: 0.459
+  placebo widening rate (1.25 x pre-event width), SCP: 0.000
+  static normal-operation PICP 0.858-0.875
+
+582 macros written

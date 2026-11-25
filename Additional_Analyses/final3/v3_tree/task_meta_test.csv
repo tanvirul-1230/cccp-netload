@@ -1,0 +1,10 @@
+Household,Horizon,Backbone,Config,ACI_gamma_tuned,CC_gain_tuned,q_SCP,q_LACP,R,N,N_calib
+H3,15min,RandomForest,"{'n_estimators': 200, 'max_depth': 12, 'min_samples_leaf': 2}",0.01,1.0,0.564944648744131,2.133610647486108,7.180000000000291,8667,4481
+H3,30min,Ridge,{'alpha': 0.1},0.01,0.25,0.68435794641477,2.0216934092429075,7.180000000000291,8663,4480
+H3,60min,Ridge,{'alpha': 0.1},0.01,0.25,0.7678723184599598,1.9976197909749145,7.180000000000291,8655,4478
+H4,15min,XGBoost,"{'n_estimators': 300, 'max_depth': 6, 'learning_rate': 0.05}",0.005,1.0,1.0598116836554254,1.3851808413843985,14.251999999993131,15384,7711
+H4,30min,RandomForest,"{'n_estimators': 300, 'max_depth': 20, 'min_samples_leaf': 2}",0.01,1.0,1.420510067462601,1.7436322934739723,14.251999999993131,15382,7710
+H4,60min,RandomForest,"{'n_estimators': 300, 'max_depth': 20, 'min_samples_leaf': 2}",0.005,0.5,1.7137734413190628,1.604216887622918,14.251999999993131,15382,7708
+H6,15min,RandomForest,"{'n_estimators': 200, 'max_depth': 12, 'min_samples_leaf': 2}",0.005,1.0,0.2003580007549317,2.1836015365334718,6.564000000000306,13349,6674
+H6,30min,RandomForest,"{'n_estimators': 300, 'max_depth': 20, 'min_samples_leaf': 2}",0.02,1.0,0.2983616361634631,2.670408033221314,6.564000000000306,13348,6673
+H6,60min,RandomForest,"{'n_estimators': 200, 'max_depth': 12, 'min_samples_leaf': 2}",0.02,1.0,0.3747290837745822,2.9307867980585764,6.564000000000306,13346,6671

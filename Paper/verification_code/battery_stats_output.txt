@@ -1,0 +1,172 @@
+events with every method in both windows: extended 1620 trip 180
+
+injected, complete PV trip
+                  Adequacy  Shortfall_kWh  GridImport_kWh  PeakImport_kW
+Method                                                                 
+Point only         0.7507         0.3800          0.9489         1.1136
+SCP                0.8049         0.2556          0.9586         1.1227
+LACP               0.8222         0.2305          0.9643         1.1217
+CC-CP              0.8090         0.2300          0.9801         1.1504
+CC-LACP            0.8306         0.2074          0.9768         1.1504
+Rolling LACP       0.8458         0.1892          0.9661         1.1292
+Rolling CC-LACP    0.8500         0.1608          0.9792         1.1599
+ACI                0.8361         0.1813          0.9828         1.1486
+ACI-LACP           0.8465         0.1789          0.9674         1.1327
+ACI-CC-LACP        0.8625         0.1559          0.9816         1.1635
+
+injected, all types
+                  Adequacy  Shortfall_kWh  GridImport_kWh  PeakImport_kW
+Method                                                                 
+Point only         0.6877         0.2954          0.5937         0.7456
+SCP                0.8179         0.1527          0.6042         0.7579
+LACP               0.8003         0.1540          0.6108         0.7684
+CC-CP              0.8060         0.1605          0.6073         0.7640
+CC-LACP            0.8008         0.1543          0.6133         0.7713
+Rolling LACP       0.8274         0.1248          0.6133         0.7717
+Rolling CC-LACP    0.8277         0.1222          0.6162         0.7763
+ACI                0.8275         0.1356          0.6109         0.7754
+ACI-LACP           0.8320         0.1210          0.6136         0.7719
+ACI-CC-LACP        0.8313         0.1190          0.6164         0.7771
+
+injected, PV loss
+                  Adequacy  Shortfall_kWh  GridImport_kWh  PeakImport_kW
+Method                                                                 
+Point only         0.7697         0.2777          0.5105         0.6745
+SCP                0.8507         0.1687          0.5190         0.6864
+LACP               0.8655         0.1486          0.5293         0.6998
+CC-CP              0.8509         0.1686          0.5238         0.6945
+CC-LACP            0.8706         0.1455          0.5326         0.7014
+Rolling LACP       0.8833         0.1183          0.5319         0.7018
+Rolling CC-LACP    0.8887         0.1128          0.5359         0.7059
+ACI                0.8708         0.1475          0.5306         0.7133
+ACI-LACP           0.8884         0.1131          0.5324         0.7013
+ACI-CC-LACP        0.8931         0.1088          0.5358         0.7060
+
+placebo
+                  Adequacy  Shortfall_kWh  GridImport_kWh  PeakImport_kW
+Method                                                                 
+Point only         0.8100         0.1067          0.2125         0.3339
+SCP                0.9421         0.0391          0.2162         0.3399
+LACP               0.9238         0.0430          0.2177         0.3445
+CC-CP              0.9339         0.0434          0.2172         0.3412
+CC-LACP            0.9209         0.0449          0.2183         0.3463
+Rolling LACP       0.9468         0.0319          0.2184         0.3468
+Rolling CC-LACP    0.9451         0.0326          0.2192         0.3487
+ACI                0.9417         0.0392          0.2183         0.3485
+ACI-LACP           0.9454         0.0311          0.2187         0.3467
+ACI-CC-LACP        0.9462         0.0312          0.2195         0.3498
+no battery grid import: injected 0.8427, placebo 0.3098 kWh per event
+
+paired differences (method - baseline), 95% cluster bootstrap
+  Inj CC-LACP  - LACP  Adequacy        +0.0005 [-0.0032, +0.0044]
+  Inj CC-LACP  - LACP  Shortfall_kWh   +0.0003 [-0.0023, +0.0025]
+  Inj CC-LACP  - LACP  GridImport_kWh  +0.0025 [+0.0016, +0.0034] *
+  Inj CC-LACP  - ACI   Adequacy        -0.0266 [-0.0360, -0.0177] *
+  Inj CC-LACP  - ACI   Shortfall_kWh   +0.0186 [+0.0112, +0.0261] *
+  Inj CC-LACP  - ACI   GridImport_kWh  +0.0023 [+0.0000, +0.0047] *
+  Inj ACI      - LACP  Adequacy        +0.0272 [+0.0191, +0.0357] *
+  Inj ACI      - LACP  Shortfall_kWh   -0.0184 [-0.0252, -0.0116] *
+  Inj ACI      - LACP  GridImport_kWh  +0.0001 [-0.0021, +0.0023]
+  Inj CC-CP    - SCP   Adequacy        -0.0119 [-0.0176, -0.0061] *
+  Inj CC-CP    - SCP   Shortfall_kWh   +0.0078 [+0.0020, +0.0135] *
+  Inj CC-CP    - SCP   GridImport_kWh  +0.0031 [+0.0018, +0.0046] *
+  Inj CC-CP    - ACI   Adequacy        -0.0215 [-0.0295, -0.0138] *
+  Inj CC-CP    - ACI   Shortfall_kWh   +0.0248 [+0.0179, +0.0328] *
+  Inj CC-CP    - ACI   GridImport_kWh  -0.0036 [-0.0063, -0.0011] *
+  Inj CC-LACP  - ACI-LACP Adequacy        -0.0312 [-0.0416, -0.0220] *
+  Inj CC-LACP  - ACI-LACP Shortfall_kWh   +0.0332 [+0.0230, +0.0445] *
+  Inj CC-LACP  - ACI-LACP GridImport_kWh  -0.0003 [-0.0018, +0.0012]
+  Inj CC-LACP  - Rolling LACP Adequacy        -0.0265 [-0.0344, -0.0190] *
+  Inj CC-LACP  - Rolling LACP Shortfall_kWh   +0.0295 [+0.0208, +0.0392] *
+  Inj CC-LACP  - Rolling LACP GridImport_kWh  -0.0000 [-0.0012, +0.0012]
+  Inj ACI-CC-LACP - ACI-LACP Adequacy        -0.0007 [-0.0046, +0.0034]
+  Inj ACI-CC-LACP - ACI-LACP Shortfall_kWh   -0.0021 [-0.0049, +0.0007]
+  Inj ACI-CC-LACP - ACI-LACP GridImport_kWh  +0.0028 [+0.0016, +0.0040] *
+  PV  CC-LACP  - LACP  Adequacy        +0.0051 [+0.0005, +0.0100] *
+  PV  CC-LACP  - LACP  Shortfall_kWh   -0.0031 [-0.0065, +0.0003]
+  PV  CC-LACP  - LACP  GridImport_kWh  +0.0033 [+0.0017, +0.0051] *
+  PV  CC-LACP  - ACI   Adequacy        -0.0002 [-0.0106, +0.0094]
+  PV  CC-LACP  - ACI   Shortfall_kWh   -0.0020 [-0.0126, +0.0090]
+  PV  CC-LACP  - ACI   GridImport_kWh  +0.0020 [-0.0027, +0.0065]
+  PV  ACI      - LACP  Adequacy        +0.0053 [-0.0037, +0.0150]
+  PV  ACI      - LACP  Shortfall_kWh   -0.0011 [-0.0105, +0.0087]
+  PV  ACI      - LACP  GridImport_kWh  +0.0013 [-0.0024, +0.0055]
+  PV  CC-CP    - SCP   Adequacy        +0.0002 [-0.0047, +0.0052]
+  PV  CC-CP    - SCP   Shortfall_kWh   -0.0001 [-0.0068, +0.0074]
+  PV  CC-CP    - SCP   GridImport_kWh  +0.0047 [+0.0029, +0.0066] *
+  PV  CC-CP    - ACI   Adequacy        -0.0199 [-0.0290, -0.0114] *
+  PV  CC-CP    - ACI   Shortfall_kWh   +0.0211 [+0.0106, +0.0345] *
+  PV  CC-CP    - ACI   GridImport_kWh  -0.0068 [-0.0114, -0.0026] *
+  PV  CC-LACP  - ACI-LACP Adequacy        -0.0178 [-0.0320, -0.0063] *
+  PV  CC-LACP  - ACI-LACP Shortfall_kWh   +0.0324 [+0.0144, +0.0582] *
+  PV  CC-LACP  - ACI-LACP GridImport_kWh  +0.0002 [-0.0021, +0.0025]
+  PV  CC-LACP  - Rolling LACP Adequacy        -0.0127 [-0.0208, -0.0049] *
+  PV  CC-LACP  - Rolling LACP Shortfall_kWh   +0.0272 [+0.0122, +0.0468] *
+  PV  CC-LACP  - Rolling LACP GridImport_kWh  +0.0007 [-0.0013, +0.0026]
+  PV  ACI-CC-LACP - ACI-LACP Adequacy        +0.0046 [-0.0005, +0.0101]
+  PV  ACI-CC-LACP - ACI-LACP Shortfall_kWh   -0.0043 [-0.0086, -0.0002] *
+  PV  ACI-CC-LACP - ACI-LACP GridImport_kWh  +0.0035 [+0.0017, +0.0054] *
+  Plc CC-LACP  - LACP  Adequacy        -0.0029 [-0.0064, +0.0006]
+  Plc CC-LACP  - LACP  Shortfall_kWh   +0.0020 [+0.0012, +0.0028] *
+  Plc CC-LACP  - LACP  GridImport_kWh  +0.0006 [+0.0002, +0.0011] *
+  Plc CC-LACP  - ACI   Adequacy        -0.0208 [-0.0288, -0.0128] *
+  Plc CC-LACP  - ACI   Shortfall_kWh   +0.0057 [+0.0022, +0.0094] *
+  Plc CC-LACP  - ACI   GridImport_kWh  -0.0000 [-0.0017, +0.0015]
+  Plc ACI      - LACP  Adequacy        +0.0179 [+0.0110, +0.0254] *
+  Plc ACI      - LACP  Shortfall_kWh   -0.0038 [-0.0071, -0.0005] *
+  Plc ACI      - LACP  GridImport_kWh  +0.0007 [-0.0010, +0.0024]
+  Plc CC-CP    - SCP   Adequacy        -0.0082 [-0.0123, -0.0042] *
+  Plc CC-CP    - SCP   Shortfall_kWh   +0.0043 [+0.0014, +0.0072] *
+  Plc CC-CP    - SCP   GridImport_kWh  +0.0010 [-0.0000, +0.0020]
+  Plc CC-CP    - ACI   Adequacy        -0.0079 [-0.0127, -0.0033] *
+  Plc CC-CP    - ACI   Shortfall_kWh   +0.0042 [+0.0015, +0.0074] *
+  Plc CC-CP    - ACI   GridImport_kWh  -0.0011 [-0.0027, +0.0004]
+  Plc CC-LACP  - ACI-LACP Adequacy        -0.0245 [-0.0331, -0.0172] *
+  Plc CC-LACP  - ACI-LACP Shortfall_kWh   +0.0139 [+0.0100, +0.0184] *
+  Plc CC-LACP  - ACI-LACP GridImport_kWh  -0.0004 [-0.0014, +0.0006]
+  Plc CC-LACP  - Rolling LACP Adequacy        -0.0259 [-0.0340, -0.0187] *
+  Plc CC-LACP  - Rolling LACP Shortfall_kWh   +0.0130 [+0.0096, +0.0168] *
+  Plc CC-LACP  - Rolling LACP GridImport_kWh  -0.0001 [-0.0006, +0.0004]
+  Plc ACI-CC-LACP - ACI-LACP Adequacy        +0.0008 [-0.0028, +0.0047]
+  Plc ACI-CC-LACP - ACI-LACP Shortfall_kWh   +0.0001 [-0.0007, +0.0010]
+  Plc ACI-CC-LACP - ACI-LACP GridImport_kWh  +0.0008 [+0.0000, +0.0016] *
+  Trip CC-LACP  - LACP  Adequacy        +0.0083 [+0.0014, +0.0172] *
+  Trip CC-LACP  - LACP  Shortfall_kWh   -0.0231 [-0.0412, -0.0074] *
+  Trip CC-LACP  - LACP  GridImport_kWh  +0.0125 [+0.0071, +0.0194] *
+  Trip CC-LACP  - ACI   Adequacy        -0.0056 [-0.0251, +0.0122]
+  Trip CC-LACP  - ACI   Shortfall_kWh   +0.0261 [-0.0068, +0.0613]
+  Trip CC-LACP  - ACI   GridImport_kWh  -0.0060 [-0.0198, +0.0071]
+  Trip ACI      - LACP  Adequacy        +0.0139 [-0.0036, +0.0326]
+  Trip ACI      - LACP  Shortfall_kWh   -0.0492 [-0.0861, -0.0156] *
+  Trip ACI      - LACP  GridImport_kWh  +0.0185 [+0.0064, +0.0329] *
+  Trip CC-CP    - SCP   Adequacy        +0.0042 [-0.0079, +0.0150]
+  Trip CC-CP    - SCP   Shortfall_kWh   -0.0256 [-0.0464, -0.0082] *
+  Trip CC-CP    - SCP   GridImport_kWh  +0.0214 [+0.0142, +0.0294] *
+  Trip CC-CP    - ACI   Adequacy        -0.0271 [-0.0465, -0.0107] *
+  Trip CC-CP    - ACI   Shortfall_kWh   +0.0487 [+0.0201, +0.0820] *
+  Trip CC-CP    - ACI   GridImport_kWh  -0.0028 [-0.0195, +0.0132]
+  Trip CC-LACP  - ACI-LACP Adequacy        -0.0160 [-0.0362, +0.0007]
+  Trip CC-LACP  - ACI-LACP Shortfall_kWh   +0.0285 [-0.0011, +0.0618]
+  Trip CC-LACP  - ACI-LACP GridImport_kWh  +0.0094 [+0.0042, +0.0152] *
+  Trip CC-LACP  - Rolling LACP Adequacy        -0.0153 [-0.0347, +0.0014]
+  Trip CC-LACP  - Rolling LACP Shortfall_kWh   +0.0182 [-0.0086, +0.0477]
+  Trip CC-LACP  - Rolling LACP GridImport_kWh  +0.0107 [+0.0062, +0.0157] *
+  Trip ACI-CC-LACP - ACI-LACP Adequacy        +0.0160 [+0.0047, +0.0302] *
+  Trip ACI-CC-LACP - ACI-LACP Shortfall_kWh   -0.0230 [-0.0381, -0.0096] *
+  Trip ACI-CC-LACP - ACI-LACP GridImport_kWh  +0.0142 [+0.0081, +0.0217] *
+
+injected, load steps
+                  Adequacy  Shortfall_kWh  GridImport_kWh  PeakImport_kW
+Method                                                                 
+Point only         0.5488         0.2890          0.6233         0.7695
+SCP                0.7882         0.1010          0.6350         0.7844
+LACP               0.6995         0.1471          0.6337         0.7892
+CC-CP              0.7500         0.1262          0.6336         0.7866
+CC-LACP            0.6917         0.1536          0.6341         0.7915
+Rolling LACP       0.7426         0.1149          0.6360         0.7929
+Rolling CC-LACP    0.7347         0.1193          0.6364         0.7948
+ACI                0.7752         0.1067          0.6314         0.7922
+ACI-LACP           0.7546         0.1112          0.6367         0.7939
+ACI-CC-LACP        0.7421         0.1147          0.6372         0.7958
+grid import of interval reserves at most 3.8% above the point-forecast reserve
+375 macros

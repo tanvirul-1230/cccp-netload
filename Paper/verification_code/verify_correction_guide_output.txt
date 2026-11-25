@@ -1,0 +1,9 @@
+[OK ] C06 inputs: steps t-1, t-2, t-4, t-96 and means over the previous four and eight steps  
+[OK ] C08 load step: 0.5 x median over [onset - 24 h, onset), constant over the event  0.3668 vs 0.3668
+[OK ] C09 held-out set 'trip': 20 per household and duration, 180 in total  {('H3', 30): 20, ('H3', 60): 20, ('H3', 120): 20, ('H4', 30): 20, ('H4', 60): 20, ('H4', 120): 20, ('H6', 30): 20, ('H6', 60): 20, ('H6', 120): 20}
+[OK ] C09 held-out set 'ev': 20 per household and duration, 180 in total  {('H3', 30): 20, ('H3', 60): 20, ('H3', 120): 20, ('H4', 30): 20, ('H4', 60): 20, ('H4', 120): 20, ('H6', 30): 20, ('H6', 60): 20, ('H6', 120): 20}
+[OK ] C13 rule order: b0.5 (lowest in-event) excluded by the 2 % rule, b0.25 selected  
+[OK ] C17 adequacy inequality reproduces simulate() on 400 random steps  mean 0.840
+[OK ] C19 second set: H3 event 1 is the unscored onset and its 26-h history has a data gap  74 missing 15-min rows before 2017-04-06 17:00:00+00:00
+[OK ] C21 OPSD URL is household_data/2020-04-15/  
+ALL OK

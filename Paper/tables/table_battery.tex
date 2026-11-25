@@ -1,0 +1,20 @@
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Reserve from} & \multicolumn{4}{c|}{Adequacy, injected window} & \multirow{2}{*}{\hdb{Short-\\fall}} & \multirow{2}{*}{\hdb{Grid\\import}} & \multirow{2}{*}{\hdb{Adequacy,\\control}}\\
+\cline{2-5}
+ & \hdb{PV\\loss} & \hdb{Load\\step} & \hdb{PV\\trip} & All & & & \\
+\hline
+No battery & -- & -- & -- & -- & -- & 0.843 & --\\
+Point only & 0.770 & 0.549 & 0.751 & 0.688 & 0.295 & 0.594 & 0.810\\
+SCP & 0.851 & \textbf{0.788} & 0.805 & 0.818 & 0.153 & \textbf{0.604} & 0.942\\
+LACP & 0.866 & 0.700 & 0.822 & 0.800 & 0.154 & 0.611 & 0.924\\
+CC-CP & 0.851 & 0.750 & 0.809 & 0.806 & 0.160 & 0.607 & 0.934\\
+\rowcolor{black!6}
+CC-LACP & 0.871 & 0.692 & 0.831 & 0.801 & 0.154 & 0.613 & 0.921\\
+Rolling LACP & 0.883 & 0.743 & 0.846 & 0.827 & 0.125 & 0.613 & \textbf{0.947}\\
+Rolling CC-LACP & 0.889 & 0.735 & 0.850 & 0.828 & 0.122 & 0.616 & 0.945\\
+ACI & 0.871 & 0.775 & 0.836 & 0.827 & 0.136 & 0.611 & 0.942\\
+ACI on LACP & 0.888 & 0.755 & 0.847 & \textbf{0.832} & 0.121 & 0.614 & 0.945\\
+ACI on CC-LACP & \textbf{0.893} & 0.742 & \textbf{0.863} & 0.831 & \textbf{0.119} & 0.616 & 0.946\\
+\hline
+\end{tabular}

@@ -1,0 +1,25 @@
+selected CC-LACP: CCLACP|b0.25
+
+per household, fractions of the LACP inside-event score
+  H3: rel +0.0222  width +0.1028  penalty -0.0806  LACP coverage 0.867  penalty share 0.401
+  H4: rel -0.0289  width +0.0274  penalty -0.0562  LACP coverage 0.808  penalty share 0.499
+  H6: rel -0.0962  width +0.0524  penalty -0.1486  LACP coverage 0.724  penalty share 0.776
+H3 by event type (rel):
+  PV: +0.0022
+  LOAD: +0.0190
+  COMBINED: +0.0470
+
+cells: test 162, development 162; Spearman test 0.718, development 0.657
+  H3: Spearman test 0.629, development 0.629
+  H4: Spearman test 0.199, development 0.465
+  H6: Spearman test 0.852, development 0.782
+weighted fit rel = -0.330 + +0.398 cov, zero at 0.829
+share of cells with LACP coverage >= 0.85: {'H3': 0.722, 'H4': 0.278, 'H6': 0.389}
+
+bin of LACP cell coverage: cells, events, rel [95% CI]
+  [0.0, 0.75)      37    740 -0.1269 [-0.1594, -0.1008]
+  [0.75, 0.85)     50   1000 -0.0172 [-0.0351, +0.0010]
+  [0.85, 0.9)      40    800 +0.0186 [-0.0037, +0.0425]
+  [0.9, 1.01)      35    700 +0.0639 [+0.0396, +0.0895]
+
+28 macros written

@@ -1,0 +1,36 @@
+Mean excess of the consistency score (injected - placebo) during 120-min PV losses, by minute after onset
+Severity   0.25   0.50   0.75
+Minute                       
+0         0.077  0.422  0.848
+15        0.041  0.361  0.602
+30        0.014  0.309  0.614
+45       -0.023  0.203  0.478
+60       -0.034  0.125  0.183
+75       -0.055  0.011  0.124
+90       -0.086 -0.004 -0.036
+105      -0.085 -0.045 -0.124
+
+Share of the peak remaining at each minute
+Severity  0.25  0.50  0.75
+Minute                    
+0         1.00  1.00  1.00
+15        0.53  0.85  0.71
+30        0.18  0.73  0.72
+45       -0.30  0.48  0.56
+60       -0.44  0.30  0.22
+75       -0.72  0.03  0.15
+90       -1.12 -0.01 -0.04
+105      -1.11 -0.11 -0.15
+
+Mean injected change inside the event (kW)
+                       dPV  dLoad
+ShiftType Household              
+COMBINED  H3         0.799  0.187
+          H4         1.240  0.346
+          H6         1.007  0.280
+LOAD      H3         0.000  0.183
+          H4         0.000  0.383
+          H6         0.000  0.305
+PV        H3         0.822  0.000
+          H4         1.228  0.000
+          H6         0.954  0.000

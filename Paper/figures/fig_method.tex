@@ -1,0 +1,93 @@
+% Fig. 1: signal-flow diagram of the consistency-conditioned interval and the data splits.
+% Needs: tikz libraries positioning, arrows.meta, calc, backgrounds.
+% Colours by role: grey = measurement, sage = fitted models, cyan = computed statistics,
+% sand = output and its use (battery reserve); titles in dark red, signals in black.
+\definecolor{ttl}{HTML}{8C1C13}
+\definecolor{sageF}{HTML}{E4EAD3}\definecolor{sageL}{HTML}{9CAC7C}
+\definecolor{cyanF}{HTML}{CFE9EE}\definecolor{cyanL}{HTML}{6FAFBD}
+\definecolor{sandF}{HTML}{F6E3AE}\definecolor{sandL}{HTML}{CFA646}
+\definecolor{greyF}{HTML}{E6E6E6}\definecolor{greyL}{HTML}{9A9A9A}
+\tikzset{
+  sig/.style={-{Stealth[length=2mm,width=1.5mm]}, line width=0.6pt},
+  blk/.style={draw, rounded corners=1.2pt, line width=0.5pt, align=center, inner sep=2.5pt, minimum height=1.05cm},
+  sum/.style={draw, circle, line width=0.55pt, minimum size=3.6mm, inner sep=0pt, fill=white},
+  prod/.style={draw, circle, line width=0.55pt, minimum size=3.6mm, inner sep=0pt, fill=white,
+               font=\small, execute at begin node={$\times$}},
+  lbl/.style={font=\footnotesize, inner sep=1.5pt},
+}
+\newcommand{\bt}[2]{{\color{ttl}\bfseries #1}\\[1pt] #2}
+\begin{tikzpicture}[font=\footnotesize]
+% ------------------------------------------------------------ forecast path
+\def\yT{2.55}\def\yB{0.55}
+\node[blk, fill=greyF, draw=greyL, minimum width=2.30cm] (M) at (1.25,\yT) {\bt{Smart meter}{$p_t$, $\ell_t$, $y_t=\ell_t-p_t$}};
+\node[blk, fill=sageF, draw=sageL, minimum width=2.50cm] (F) at (4.50,\yT) {\bt{Net-load forecaster}{$\hat y_{t+h\mid t}$ from $x_t$}};
+\node[blk, fill=cyanF, draw=cyanL, minimum width=3.30cm] (Q) at (8.90,\yT) {\bt{Conformal quantile}{$R_i=|y_{i+h}-\hat y_{i+h\mid i}|/\sigma_i$}};
+\node[blk, fill=sandF, draw=sandL, minimum width=2.60cm] (I) at (12.60,\yT) {\bt{Prediction interval}{$\hat y_{t+h\mid t}\pm q\,\sigma_t$}};
+\draw[sig] (M) -- node[lbl, above] {$x_t$} (F);
+\draw[sig] (F) -- node[lbl, above] {$\hat y_{t+h\mid t}$} (Q);
+\draw[sig] (Q) -- node[lbl, above] {$q$} (I);
+\draw[sig] (I.east) -- (17.30,\yT) node[lbl, above left] {$C_t$};
+% battery reserve: holds back e_min plus the energy of the upper bound u_t of C_t for the next step (Sec. III-E)
+\node[blk, fill=sandF, draw=sandL, minimum width=2.95cm] (B) at (15.75,\yB)
+  {\bt{Battery reserve}{$e_{\min}+\max(u_t,0)\,\Delta t/\eta$}};
+\coordinate (bb) at (15.75,\yT);
+\fill (bb) circle (1.1pt);
+\draw[sig] (bb) -- node[lbl, right] {$u_t$} (B.north);
+% ACI feedback (ACI and ACI-CC only)
+\node[sum] (JA) at (8.90,3.74) {};
+\draw[sig] (7.30,3.74) node[lbl, left] {$\alpha$} -- (JA.west);
+\node[lbl] at ($(JA)+(-0.36,0.22)$) {$+$};
+\coordinate (br) at (14.55,\yT);
+\fill (br) circle (1.1pt);
+\draw[sig, dash pattern=on 3pt off 1.8pt] (br) |- (JA.east);
+\node[lbl] at ($(JA)+(0.36,0.22)$) {$-$};
+\node[lbl, above] at (12.60,3.74) {$e_{t-h}$, uncovered outcome (ACI)};
+\draw[sig] (JA.south) -- node[lbl, right, xshift=1.8pt] {$\alpha_t$} node[lbl, left, xshift=-1.8pt] {$\gamma$} (Q.north);
+% ------------------------------------------------------------ consistency path
+\node[blk, fill=sageF, draw=sageL, minimum width=2.30cm] (N) at (1.25,\yB) {\bt{Normal-behaviour}{models $\hat p_t$, $\hat\ell_t$}};
+\node[sum] (JR) at (3.20,\yB) {};
+\node[blk, fill=cyanF, draw=cyanL, minimum width=2.60cm] (Z) at (5.40,\yB) {\bt{Normalised residuals}{$z_t=\max(z^{\mathrm{PV}}_t,z^{\mathrm{L}}_t)$}};
+\node[blk, fill=cyanF, draw=cyanL, minimum width=2.80cm] (S) at (8.90,\yB) {\bt{Consistency score}{$\tilde\rho_t=[\bar z_t-m]^+$}};
+\node[blk, fill=cyanF, draw=cyanL, minimum width=1.40cm] (G) at (11.25,\yB) {\bt{Gain}{$1+\beta\tilde\rho_t$}};
+\node[prod] (X) at (12.60,\yB) {};
+\node[blk, fill=sageF, draw=sageL, minimum width=2.70cm] (D) at (12.60,-0.75) {\bt{Difficulty scale}{$s(x_t)$, or 1 for CC-CP}};
+\draw[sig] (M.south) -- node[lbl, left] {past $p$, $\ell$} (N.north);
+\draw[sig] ($(M.south east)+(-0.25,0)$) |- (2.55,1.55) -| (JR.north);
+\node[lbl, above] at (2.95,1.55) {$p_t$, $\ell_t$};
+\node[lbl] at ($(JR)+(0.24,0.36)$) {$+$};
+\draw[sig] (N.east) -- (JR.west);
+\node[lbl] at ($(JR)+(-0.36,-0.24)$) {$-$};
+\draw[sig] (JR.east) -- (Z.west);
+\draw[sig] (Z) -- node[lbl, above] {$z_t$} (S);
+\draw[sig] (S) -- (G);
+\draw[sig] (G) -- (X);
+\draw[sig] (D) -- (X);
+\draw[sig] (X.north) -- node[lbl, right, pos=0.45] {$\sigma_t$} (I.south);
+\coordinate (bs) at (12.60,1.60);
+\fill (bs) circle (1.1pt);
+\draw[sig] (bs) -| (Q.south);
+% consistency path frame
+\begin{scope}[on background layer]
+  \draw[greyL, dash pattern=on 2.5pt off 1.5pt, rounded corners=3pt, line width=0.45pt] (2.88,-0.10) rectangle (12.95,1.25);
+\end{scope}
+\node[lbl, anchor=north west, text=greyL!60!black] at (2.93,-0.12) {consistency factor, from measurements up to the issue time $t$};
+% ------------------------------------------------------------ data splits
+\def\yL{-1.90}
+\draw[-{Stealth[length=2mm,width=1.5mm]}, line width=0.6pt] (0.05,\yL) -- (17.30,\yL) node[lbl, below left] {time};
+\fill[sageF] (0.10,\yL+0.03) rectangle (4.95,\yL+0.16);
+\fill[greyF!85!black] (5.05,\yL+0.03) rectangle (7.55,\yL+0.16);
+\fill[cyanF!70!black!40!sageF] (7.65,\yL+0.03) rectangle (10.35,\yL+0.16);
+\fill[cyanF!85!black] (10.45,\yL+0.03) rectangle (12.85,\yL+0.16);
+\fill[sandF!90!black] (12.95,\yL+0.03) rectangle (15.60,\yL+0.16);
+\foreach \x in {0.10,5.00,7.60,10.40,12.90,15.60} {\draw[line width=0.5pt] (\x,\yL-0.07) -- (\x,\yL+0.07);}
+\node[lbl, above] at (2.55,\yL+0.16) {training, 50\%};
+\node[lbl, above] at (6.30,\yL+0.16) {tune, 10\%};
+\node[lbl, above] at (9.00,\yL+0.16) {development, 10\%};
+\node[lbl, above] at (11.65,\yL+0.16) {calibration, 10\%};
+\node[lbl, above] at (14.25,\yL+0.16) {test, 20\%};
+\node[lbl, below, align=center] at (2.55,\yL-0.07) {forecaster,\\ normal-behaviour models};
+\node[lbl, below, align=center] at (6.30,\yL-0.07) {$s(\cdot)$, $s_0$, $c$, $m$};
+\node[lbl, below, align=center] at (9.00,\yL-0.07) {$\beta$, $\gamma$ from\\ development events};
+\node[lbl, below, align=center] at (11.65,\yL-0.07) {$q$};
+\node[lbl, below, align=center] at (14.25,\yL-0.07) {injected and\\ control windows};
+\end{tikzpicture}

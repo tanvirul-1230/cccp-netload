@@ -1,0 +1,112 @@
+[OK ] LACP narrows under PV loss in H3 and H4 (CI below 0)  
+[OK ] LACP widens in H6 (CI above 0)  
+[OK ] factor widens LACP in every household (paired CI above 0)  [('H3', '+0.066', '+0.049', '+0.083'), ('H4', '+0.048', '+0.035', '+0.060'), ('H6', '+0.044', '+0.026', '+0.063')]
+[OK ] CC-LACP lower than LACP under PV loss in H4 and H6 (CI below 0)  
+[OK ] CC-LACP not distinguishable from LACP under PV loss in H3 (CI contains 0)  
+[OK ] ACI widens most in H6 (> 3x the other households)  
+[OK ] LACP width ratio falls as the loss deepens  [ 0.04  -0.003 -0.065]
+[OK ] LACP ratio below one at s = 0.75 (CI below 0)  
+[OK ] width added by the factor grows with the loss  [0.002, 0.048, 0.108]
+[OK ] CC-LACP ratio stays level (range < 0.01)  [0.042 0.044 0.043]
+[OK ] CC-CP widens more as the loss grows  [0.012 0.135 0.286]
+[OK ] ACI widens more as the loss grows  [0.286 0.414 0.53 ]
+[OK ] ACI widens most at the first disturbed issue time  {'LACP': np.float64(-0.0324814019290801), 'CC-LACP': np.float64(0.0561645841851677), 'CC-CP': np.float64(0.2345242985038035), 'ACI': np.float64(0.3892187679714244)}
+[OK ] ACI stays wider than placebo until the loss ends (CI above 0 at 0..105 min)  
+[OK ] CC-CP widening peaks at the onset  {0.0: 0.235, 15.0: 0.181, 30.0: 0.164, 45.0: 0.127, 60.0: 0.085, 75.0: 0.052, 90.0: 0.021, 105.0: -0.012}
+[OK ] CC-CP widening fades before the loss ends (CI at 105 min contains 0)  
+[OK ] LACP narrower than placebo throughout the loss (value < 0 at 0..105)  
+[OK ] covHourDCCLACPvsLACPCI excludes zero (text: more than)  [+0.022, +0.050]
+[OK ] covHourDCCLACPvsACICI excludes zero (text: more than)  [+0.022, +0.092]
+[OK ] CC-LACP vs LACP ranges from H6 (lowest) to H3 (highest)  [-9.6, -2.9, 2.2]
+[OK ] width-matched control scores lower than CC-LACP  +1.8\%
+[OK ] CC-LACP vs width-matched control: interval above zero (text gives it)  [+1.4\%, +2.2\%]
+[OK ] 3.7-kW steps fall outside most intervals (PICP < 0.5 for most methods)  {'SCP': 0.05, 'LACP': 0.089, 'CCCP': 0.401, 'CCLACP': 0.241, 'ACI': 0.524, 'ACItuned': 0.092, 'ACIL': 0.349, 'ACICCL': 0.414, 'ROLLSCP': 0.051, 'ROLLLACP': 0.123, 'ROLLCCLACP': 0.335}
+[OK ] coverage below 0.90 inside disturbances for every method  {'SCP': 0.718, 'LACP': 0.8, 'CCCP': 0.781, 'CCLACP': 0.831, 'ACI': 0.845, 'ACItuned': 0.772, 'ACIL': 0.85, 'ACICCL': 0.862, 'ROLLSCP': 0.759, 'ROLLLACP': 0.834, 'ROLLCCLACP': 0.86}
+[OK ] score marks larger error: SCP covers more at zero than in the high band  
+[OK ] CC-CP raises high-band coverage above SCP and LACP  
+[OK ] CC-LACP raises high-band coverage above SCP and LACP  
+[OK ] width-matched SCP stays near SCP in the high band  
+[OK ] CC-LACP covers less than LACP when the score is zero (CIs separate)  
+[OK ] of the Fig. 6 sweeps, only the selected CC-LACP gain is below LACP inside with clean score within 2%  ['CCLACP|b0.25']
+[OK ] larger CC-LACP gains raise both scores  
+[OK ] ACI above LACP inside events at every step  
+[OK ] CC-CP at least 13% above LACP inside for every gain  [0.203, 0.158, 0.139, 0.132, 0.173, 0.33]
+[OK ] factor lowers both scores of ACI at the smallest steps  
+[OK ] factor raises both scores of ACI at the selected step  
+[OK ] rule sets the gain of ACI on CC-CP to zero  
+[OK ] off-scale points named in the caption  ['ACICC|b0.25|g0.5', 'ACI|g0.5', 'CCLACP|b2', 'CC|b4']
+[OK ] PV channel carries the PV-loss response, not the load-step response  
+[OK ] load channel carries the load-step response, not the PV-loss response  
+[OK ] models restricted to the day lag lose the PV-loss response  
+[OK ] persistence residual responds less to PV loss  
+[OK ] persistence residual scores worse inside events  
+[OK ] on the LACP scale the load-step response comes from s(x): LACP and CC-LACP load responses within 0.01  
+[OK ] PV channel alone gives nearly the same gain as both (within 0.5 points)  
+[OK ] persistence residual and indicator give smaller gains  
+[OK ] CC-LACP vs ACI has opposite signs by household  
+[OK ] ACI covers more inside disturbances than CC-LACP  
+[OK ] relCCLACPvsACILCI below zero (text: scores below)  [$-$7.7\%, $-$1.4\%]
+[OK ] relCCLACPvsROLLLACPCI below zero (text: scores below)  [$-$4.7\%, $-$1.6\%]
+[OK ] recalibration brings normal-operation coverage to about 0.90  [0.897, 0.896, 0.899, 0.9]
+[OK ] relROLLCCLACPvsROLLLACPCI contains zero (text: no significant average gain / not distinguishable)  [$-$1.6\%, +0.8\%]
+[OK ] relACICCLvsACILCI contains zero (text: no significant average gain / not distinguishable)  [$-$0.6\%, +3.4\%]
+[OK ] netdCCCPvsACICI contains zero (text: no significant average gain / not distinguishable)  [$-$0.043, +0.054]
+[OK ] relCCLACPvsACICI contains zero (text: no significant average gain / not distinguishable)  [$-$10.4\%, +0.3\%]
+[OK ] onsetFROLLCI: the factor still widens at onset / raises first-hour coverage (CI above 0)  [+0.074, +0.104]
+[OK ] onsetFACILCI: the factor still widens at onset / raises first-hour coverage (CI above 0)  [+0.060, +0.089]
+[OK ] covHourFROLLCI: the factor still widens at onset / raises first-hour coverage (CI above 0)  [+0.021, +0.045]
+[OK ] covHourFACILCI: the factor still widens at onset / raises first-hour coverage (CI above 0)  [+0.009, +0.037]
+[OK ] evfacROLLCI: the factor lowers the score on 3.7-kW steps inside recalibration (CI below 0)  [$-$34.4\%, $-$30.1\%]
+[OK ] evfacACILCI: the factor lowers the score on 3.7-kW steps inside recalibration (CI below 0)  [$-$23.4\%, $-$16.9\%]
+[OK ] CC-LACP below LACP at every horizon (CI below 0)  [[ 1.50000000e+01 -4.23646235e-02 -2.25046112e-02]
+ [ 3.00000000e+01 -3.57926295e-02 -1.28193118e-02]
+ [ 6.00000000e+01 -2.45401528e-02 -1.02566605e-03]]
+[OK ] rolling and ACI reserves on the LACP and CC-LACP scores have the highest RAR under PV loss  {'ACI': 0.871, 'ACI-CC-LACP': 0.893, 'ACI-LACP': 0.888, 'CC-CP': 0.851, 'CC-LACP': 0.871, 'LACP': 0.866, 'Point only': 0.77, 'Rolling CC-LACP': 0.889, 'Rolling LACP': 0.883, 'SCP': 0.851}
+[OK ] ... and under complete trips  {'ACI': 0.836, 'ACI-CC-LACP': 0.862, 'ACI-LACP': 0.847, 'CC-CP': 0.809, 'CC-LACP': 0.831, 'LACP': 0.822, 'Point only': 0.751, 'Rolling CC-LACP': 0.85, 'Rolling LACP': 0.846, 'SCP': 0.805}
+[OK ] batPVAdqCCLACPvsLACP positive, below 0.01, CI above 0  +0.005 [+0.000, +0.010]
+[OK ] batTripAdqCCLACPvsLACP positive, below 0.01, CI above 0  +0.008 [+0.001, +0.017]
+[OK ] factor lowers the load-step RAR slightly: CC-LACP < LACP by less than 0.02  0.700 -> 0.692
+[OK ] factor lowers the load-step RAR slightly: Rolling CC-LACP < Rolling LACP by less than 0.02  0.743 -> 0.735
+[OK ] factor lowers the load-step RAR slightly: ACI-CC-LACP < ACI-LACP by less than 0.02  0.755 -> 0.742
+[OK ] factor raises the ACI-on-LACP RAR under trips (paired CI above 0)  [+0.005, +0.030]
+[OK ] 3.7-kW steps exceed the 2.5-kW discharge limit  
+[OK ] SCP and ACI reserves rank highest under load steps  {'ACI': 0.775, 'ACI-CC-LACP': 0.742, 'ACI-LACP': 0.755, 'CC-CP': 0.75, 'CC-LACP': 0.692, 'LACP': 0.7, 'Point only': 0.549, 'Rolling CC-LACP': 0.735, 'Rolling LACP': 0.743, 'SCP': 0.788}
+[OK ] factor changes RAR less than the calibration method (max factor effect < min calibration effect)  factor [0.005 0.008 0.005 0.016 0.005 0.004], calibration [0.018 0.023 0.024 0.024]
+[OK ] a learned difficulty scale narrows in most PV losses (LACP narrower than placebo in > 50%)  61\%
+[OK ] normal-operation score of CC-LACP slightly higher than LACP (0 < change < 2%)  +1.1\%
+[OK ] per-household range in the abstract: H6 lowest, H3 highest  
+[OK ] ACI normal-operation score higher than CC-LACP (text: at a higher normal-operation score)  +8.7\% vs +1.1\%
+[OK ] dmCCLACPvsLACP: counts of significantly lower / not different / higher sum to nine tasks  2/4/3
+[OK ] dmCCLACPvsACI: counts of significantly lower / not different / higher sum to nine tasks  6/3/0
+[OK ] development: only the steps 0.1 and 0.2 lie within the 2% tolerance  [0.1, 0.2]
+[OK ] development: smaller steps score 5.4% to 11.2% above the best without injection  5.4-11.2
+[OK ] development: the selected ACI step is admissible  ACI|g0.2
+[OK ] static normal-operation coverage 0.858-0.875, below 0.90  [0.873, 0.862, 0.875, 0.858]
+[OK ] rolling recalibration restores about 0.90 (drift, not the calibration size)  [0.898, 0.897, 0.896]
+[OK ] ACI below 0.90 because of the clip: unclipped covers 0.900 at a higher nIS  ACI gamma=0.2 clipped: PICP 0.8692 nIS 0.2946 ACI gamma=0.2 unclipped: PICP 0.9000 nIS 0.3980
+[OK ] 30-min events enter only at 15 min, 60-min events at 15 and 30 min  {'15min': {30: 1.0, 60: 3.0, 120: 7.0}, '30min': {30: 0.0, 60: 2.0, 120: 6.0}, '60min': {30: 0.0, 60: 0.0, 120: 4.0}}
+[OK ] second set: 161 scored events of two per configuration and household (27 x 2 x 3 = 162)  161
+[OK ] ACI's step sets how often it widens without injection (tune-split step widens less often than the selected)  0.05 vs 0.57
+[OK ] test-period macros present  Mar 2017--Jul 2017, Aug 2017--Feb 2018, Nov 2017--Apr 2018
+[OK ] 3.7 kW is the power of a single-phase 16-A charger at 230 V  
+[OK ] H3: the factor does not lower the development score  
+[OK ] H6: the factor lowers the development score but exceeds the 2% tolerance  
+[OK ] H3: the factor does not help on test either (CI above 0)  [+0.4\%, +4.0\%]
+[OK ] H6 has the largest in-event gain of the three households  
+[OK ] lasting-loss check output present (score back at control level within about 90 min)  
+[OK ] gain largest where the unmodified interval misses: lowest-coverage bin below zero (CI), highest above (CI)  [$-$15.9\%, $-$10.1\%] / [+4.0\%, +8.9\%]
+[OK ] bins ordered: change rises with LACP coverage  $-$12.7\% < $-$1.7\% < +1.9\% < +6.4\%
+[OK ] rank correlation positive on test and on development events  0.72, 0.66
+[OK ] the relation also holds within each household (positive rank correlation, test and development)  [('H3', '0.629', '0.629'), ('H4', '0.199', '0.465'), ('H6', '0.852', '0.782')]
+[OK ] fitted change crosses zero inside the observed coverage range  0.83
+[OK ] LACP in-event coverage highest in H3, then H4, then H6  [0.87, 0.81, 0.72]
+[OK ] in H3 the added width outweighs the misses removed  +10.3\% $-$8.1\%
+[OK ] width and penalty parts add up to the H3 change (+2.2%)  
+[OK ] H3: PV loss nearly neutral, load steps and combined events raise the score  +0.2\% +1.9\% +4.7\%
+[OK ] 'most H3 events' already covered: majority of H3 cells have LACP coverage >= 0.85  72\%
+[OK ] no 'placebo' left in the paper text or Fig. 1  
+[OK ] removed abbreviations absent from the text (macro names excluded)  []
+[OK ] table_results.tex: no PICP/nIS/RAR/Placebo in headers  
+[OK ] table_ablation.tex: no PICP/nIS/RAR/Placebo in headers  
+[OK ] table_battery.tex: no PICP/nIS/RAR/Placebo in headers  
+ALL OK

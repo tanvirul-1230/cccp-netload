@@ -1,0 +1,479 @@
+\documentclass[conference,a4paper]{IEEEtran}
+\IEEEoverridecommandlockouts
+\addtolength{\textheight}{60pt}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{stfloats}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage[table]{xcolor}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{tikz}
+\usepackage{eso-pic}
+\usetikzlibrary{positioning,arrows.meta,fit,calc,backgrounds}
+\input{numbers.tex}
+\input{numbers_extra.tex}
+\input{numbers_battery.tex}
+\input{numbers_review.tex}
+\pdfinfoomitdate=1
+\pdftrailerid{}
+\pdfsuppressptexinfo=-1
+
+\newcommand{\cmk}{\ensuremath{\checkmark}}
+\newcommand{\xmk}{\ensuremath{\times}}
+\newcommand{\hdb}[1]{\begin{tabular}{@{}c@{}}#1\end{tabular}}
+
+\begin{document}
+\AddToShipoutPictureFG*{%
+  \AtTextUpperLeft{\put(0,\LenToUnit{20pt}){\footnotesize 2026 29th International Conference on Computer and
+    Information Technology (ICCIT)}%
+    \put(0,\LenToUnit{10.5pt}){\footnotesize 18-20 December 2026, Cox's Bazar, Bangladesh}}%
+  \AtTextLowerLeft{\put(0,\LenToUnit{-24pt}){\footnotesize 979-8-3195-0171-4/26/\$31.00~\copyright2026~IEEE}}}
+
+\title{Consistency-Conditioned Conformal Prediction for Residential Net Load Forecasting under Abrupt Shifts,
+with Application to Home Battery Reserves}
+
+\author{\IEEEauthorblockN{Ishrat Jahan, Mst. Sania Israt and Md. Tanvirul Islam}
+\IEEEauthorblockA{Rajshahi University of Engineering \& Technology, Rajshahi-6204, Bangladesh\\
+ishraturmi343@gmail.com, sanianuha53@gmail.com, mahinblackbox@gmail.com}}
+
+\maketitle
+
+\begin{abstract}
+A home battery holds back an energy reserve sized from a forecast interval of household net load, consumption
+minus rooftop photovoltaic (PV) generation. When PV drops abruptly, for example after an inverter trip, this
+interval is too narrow when the reserve is drawn: a split conformal interval retains its width, and adaptive
+conformal inference widens only after forecasts have missed. The household meters, however, show the drop at the
+issue time. This work scales a conformal interval by a consistency score, the departure of metered PV and load from
+models of their normal behaviour. Three German households of the Open Power System Data are evaluated at 15- to
+60-min horizons under injected PV losses and load steps, each compared with the same window without injection, and
+under held-out PV trips and large load steps. A learned model of forecast difficulty narrows the interval in most
+PV losses. The consistency factor counteracts this narrowing and lowers the interval score, which rewards narrow
+intervals and penalises misses, during disturbances by \absrelCCLACPvsLACP{} on household average
+(\relCCLACPvsLACPHSix{} to \relCCLACPvsLACPHThree{} per household), most where the unmodified interval misses the
+disturbance, at a normal-operation score \abscleanrelCCLACP{} higher. Fixed-step adaptive conformal inference
+is not distinguishable inside disturbances and scores higher in normal operation. Once the quantile follows recent
+errors the factor gives no significant average in-event gain, and for a battery reserve the calibration method
+matters more.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Conformal prediction, adaptive conformal inference, net load forecasting, photovoltaic generation, home
+energy management, battery reserve.
+\end{IEEEkeywords}
+
+\section{Introduction}
+Home energy management systems rely on load forecasting to schedule energy use \cite{raza}. Behind-the-meter photovoltaic (PV)
+panels make the net load of a household, consumption minus local generation, more irregular than its consumption
+\cite{xuchen}, and uncertainty-aware battery scheduling builds on probabilistic forecasts \cite{sesay}. Conformal
+prediction turns any point forecaster into an interval whose marginal coverage holds in finite samples for
+exchangeable data \cite[Thm.~2.2]{lei}. PV output can drop abruptly, for example when an inverter trips on a
+voltage excursion \cite[Sec.~I]{dehghanpour}, and demand can step up when an electric vehicle starts charging.
+Under such shifts the reliability of conformal intervals declines \cite{ilic}, so the interval has to respond to
+evidence available at the issue time.
+
+\subsection{Related Works}
+\emph{Conformal net-load and PV forecasting.} Xu and Chen \cite{xuchen} forecast single-household net load by
+quantile regression, and Faustine and Pereira \cite[Sec.~II-A]{faustine} apply split
+conformal prediction to substation net load. Cheng \emph{et al.} \cite{cheng} feed an online conformal net-load
+bound into battery scheduling and report coverage in ten synthetic stress events, and Nesterov \cite{nesterov} proposes a regime-wise
+conformal calibration of net-load intervals on the same data package. For PV power, adaptive conformal
+inference (ACI) has been combined with a daily reset \cite{suresh}, and Ili\'c \emph{et al.} \cite{ilic} trigger retraining by an
+out-of-distribution test on the inputs, where soiled samples largely overlap normal data.
+
+\emph{Normalised and adaptive conformal prediction.} The nonconformity score has been divided by an estimated
+residual spread \cite[Sec.~5.2]{lei} or a neural-network error model \cite[eq.~(16)]{papadopoulos11}, and weighted
+quantiles limit the coverage loss under drift \cite[Sec.~3.1]{barber}. ACI \cite[eq.~(2)]{gibbs} updates the
+miscoverage level after each coverage error, with the step tuned online \cite[Sec.~2.3]{gibbs24} or extended by
+error integration and scorecasting \cite[Sec.~2]{angelopoulos}. Sun and Yu \cite{sunyu} condition online intervals
+on a predicted discrete state. Closest in form, Chin \cite[eqs.~(2), (4)]{chin} divides the score by
+$1+\lambda|R(x)|$, with $R$ a partial-differential-equation residual, and by a Monte Carlo dropout scale.
+Table~\ref{tab:lit} compares these works.
+
+\begin{table*}[t]
+\caption{Selected conformal and probabilistic forecasting studies related to this work}
+\label{tab:lit}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\renewcommand{\arraystretch}{0.92}
+\newcommand{\hd}[1]{\begin{tabular}{@{}c@{}}#1\end{tabular}}
+\begin{tabular}{|l|c|c|c|c|c|p{7.4cm}|}
+\hline
+Work & \hd{Net\\load} & \hd{Con-\\formal} & \hd{Learned\\scale} & \hd{Error-\\driven} & \hd{Consistency\\residual} &
+Key focus\\
+\hline
+Papadopoulos and Haralambous \cite{papadopoulos11} & \xmk & \cmk & \cmk & \xmk & \xmk & Score normalised by a neural-network error model\\
+Gibbs and Cand\`es \cite{gibbs,gibbs24} & \xmk & \cmk & \xmk & \cmk & \xmk & Adaptive conformal inference with a fixed or online-tuned step\\
+Angelopoulos \emph{et al.} \cite{angelopoulos} & \xmk & \cmk & \xmk & \cmk & \xmk & Quantile tracking with error integration and scorecasting\\
+Sun and Yu \cite{sunyu} & \xmk & \cmk & \xmk & \cmk & \xmk & Intervals conditioned on a predicted discrete state\\
+Chin \cite{chin} & \xmk & \cmk & \cmk & \xmk & \cmk & Differential-equation residual and a dropout scale in the score\\
+Suresh \emph{et al.} \cite{suresh} & \xmk & \cmk & \xmk & \cmk & \xmk & ACI with a daily reset for hour-ahead PV power\\
+Ili\'c \emph{et al.} \cite{ilic} & \xmk & \cmk & \xmk & \xmk & \xmk & Input out-of-distribution test triggers retraining\\
+Faustine and Pereira \cite{faustine} & \cmk & \cmk & \xmk & \xmk & \xmk & Split conformal forecasts of substation net load\\
+Cheng \emph{et al.} \cite{cheng} & \cmk & \cmk & \xmk & \cmk & \xmk & Conformal net-load bound in battery scheduling\\
+Xu and Chen \cite{xuchen} & \cmk & \xmk & \xmk & \xmk & \xmk & Quantile forecasts of single-household net load\\
+\textbf{This work} & \cmk & \cmk & \cmk & \cmk & \cmk & \textbf{Measured PV and load consistency scales the interval}\\
+\hline
+\end{tabular}
+\end{table*}
+
+\subsection{Motivation and Contribution}
+A forecast issued at $t$ for $t+h$ is scored at $t+h$, so ACI adapts only through the outcomes of forecasts
+whose targets fall inside a disturbance \cite{gibbs}, and its step also sets how often it widens without one. A
+difficulty model fitted to normal operation receives the same inputs whether PV is low because of the time of day
+or because of a fault. The measurements at the issue time carry more direct evidence: if PV falls well below its
+expected value or load rises well above it, the household already departs from normal behaviour at time $t$. The
+reviewed studies neither scale net-load intervals continuously by such a departure nor compare the same windows
+with and without the disturbance. This study asks whether a measured departure from normal behaviour can steer a
+conformal interval through abrupt changes: how a learned difficulty scale responds to PV loss (Q1), what the
+consistency factor changes (Q2), how it compares and combines with error-driven recalibration (Q3), and whether it
+changes a battery reserve (Q4). The contributions
+are:
+\begin{itemize}
+\item A consistency score from normalised residuals of normal-behaviour models of PV and load, applied as a factor
+on the nonconformity score of split, locally adaptive, rolling and adaptive conformal intervals.
+\item An evaluation that compares each injected disturbance with its control window, the same window without
+injection, selects every gain and step on development data, and adds held-out PV trips and 3.7-kW load steps.
+\item Evidence from three households that a learned difficulty scale narrows in most PV losses and that the
+factor on this scale lowers the in-event interval score at a slightly higher normal-operation score, the more so
+the more of the disturbance the unmodified interval misses.
+\item Evidence that the factor gives no significant in-event gain once the quantile follows recent scores and matters
+less for a battery reserve than the calibration method.
+\end{itemize}
+
+
+\section{Interval Methods}\label{sec:method}
+\begin{figure*}[t]
+\centering
+\input{figures/fig_method.tex}
+\caption{Signal flow of the consistency-conditioned interval up to the battery reserve, and the data splits. The
+dashed feedback acts in the ACI variants only.}
+\label{fig:method}
+\end{figure*}
+
+\subsection{Forecasts and Conformal Intervals}
+Let $p_t$ and $\ell_t$ denote the metered PV generation and load of a household in 15-min step $t$, and
+$y_t=\ell_t-p_t$ its net load. A point forecaster issues $\hat y_{t+h\mid t}$ at horizon $h$ from features
+$x_t$ that use data up to $t$. With a scale $\sigma_t>0$, the nonconformity score of calibration point $i$ is
+\begin{equation}
+R_i=\frac{|y_{i+h}-\hat y_{i+h\mid i}|}{\sigma_i},\qquad i=1,\dots,n, \label{eq:score}
+\end{equation}
+$q$ is its $k$-th smallest value with $k=\lceil (n+1)(1-\alpha)\rceil$ at miscoverage level $\alpha=0.1$, and the
+interval is
+\begin{equation}
+C_t=\big[\hat y_{t+h\mid t}-q\,\sigma_t,\;\hat y_{t+h\mid t}+q\,\sigma_t\big]. \label{eq:interval}
+\end{equation}
+Split conformal prediction (SCP) uses $\sigma_t=1$. Locally adaptive conformal prediction (LACP) uses
+$\sigma_t=s(x_t)$, a random forest of the absolute tune-split forecast error floored at its 10th percentile
+\cite[Sec.~5.2]{lei}, \cite[eq.~(16)]{papadopoulos11}. With $s(\cdot)$, the gains and the normal-behaviour models
+fixed before calibration, the coverage is at least $1-\alpha$ for exchangeable calibration and test points
+\cite[Thm.~2.2]{lei}. Serial dependence and the disturbances violate this assumption, so coverage is measured. ACI
+replaces $\alpha$ by a level $\alpha_t$. The target $y_t$ of the forecast issued at $t-h$ is observed at $t$, so
+the interval issued at $t$ uses
+\begin{equation}
+\alpha_{t}=\min\{\max\{\alpha_{t-1}+\gamma(\alpha-e_{t-h}),\,0.001\},\,0.5\}, \label{eq:aci}
+\end{equation}
+where $e_{t-h}\in\{0,1\}$ indicates that $y_t$ fell outside its interval and $\gamma$ is the step
+\cite[eq.~(2)]{gibbs}. The quantile $q_t$ is taken over the latest 2000 scores, starting from $\alpha_0=\alpha$
+with the calibration scores (tune scores on the development split).
+
+\subsection{Consistency Score}
+Normal-behaviour models predict PV and load at step $t$ from their own values at steps $t-1$, $t-2$, $t-4$ and
+$t-96$ (one day), their means over the previous four and eight steps, and calendar terms: $\hat p_t$ and $\hat\ell_t$ are
+gradient-boosted trees fitted on the training split. The normalised residuals are
+\begin{equation}
+z^{\mathrm{PV}}_t=\frac{|p_t-\hat p_t|}{s_0+c\,|\hat p_t|},\qquad
+z^{\mathrm{L}}_t=\frac{|\ell_t-\hat\ell_t|}{s'_0+c'\,|\hat\ell_t|}, \label{eq:z}
+\end{equation}
+with $(s_0,c)$ and $(s'_0,c')$ nonnegative least-squares fits of the absolute residual on the absolute prediction
+over the tune split, $s_0$ and $s'_0$ floored at the 10th percentile of the absolute residual. The consistency
+score is
+\begin{equation}
+\tilde\rho_t=\big[\bar z_t-m\big]^+,\quad
+\bar z_t=\lambda\,\bar z_{t-1}+(1-\lambda)\max\{z^{\mathrm{PV}}_t,z^{\mathrm{L}}_t\}, \label{eq:rho}
+\end{equation}
+with $\lambda=2^{-1/2}$ (half-life of 30 min, not tuned) and $m$ the tune-split median of $\bar z_t$, so a
+larger $\tilde\rho_t$ marks a larger departure.
+
+\subsection{Consistency-Conditioned Intervals}
+The consistency factor enters the scale of \eqref{eq:score} and \eqref{eq:interval}:
+\begin{equation}
+\text{CC-CP: } \sigma_t=1+\beta\tilde\rho_t,\qquad \text{CC-LACP: } \sigma_t=s(x_t)\,(1+\beta\tilde\rho_t),
+\label{eq:cc}
+\end{equation}
+with gain $\beta\ge0$. The score has the normalised form of \cite{papadopoulos11,chin}, and $\beta=0$ recovers SCP
+and LACP. ACI runs \eqref{eq:aci} on the SCP, CC-CP, LACP and CC-LACP scores. Rolling variants recompute $q$ over the latest 2000 scores at the fixed level $\alpha$ ($\gamma=0$). An
+indicator variant replaces $\tilde\rho_t$ by $\mathbf{1}\{\tilde\rho_t>\tau\}$, with $\tau$ the 80th, 90th or 95th
+tune-split percentile of $\tilde\rho_t$.
+
+\section{Evaluation Protocol}\label{sec:protocol}
+\subsection{Data and Forecasters}
+Households residential3, residential4 and residential6 (H3, H4, H6) of the Open Power System Data household
+package \cite{opsd}, from southern Germany, are its residential households with PV, import and export
+meters. The cumulative 15-min readings are differenced and divided by 0.25~h into the mean power over the 15~min from
+each time stamp, and a forecast issued at step $t$ is made at the end of step $t$.
+Negative differences, interpolated rows and two meter jumps in H3 are set to missing, and load is import plus PV
+minus export, so net load is import minus export. Each record is split in time into training, tune,
+development, calibration and test parts of 50/10/10/10/20\% (Fig.~\ref{fig:method}), and targets that cross a
+boundary are dropped. The test periods are \testHThree{} (H3), \testHFour{} (H4) and \testHSix{} (H6). For each
+household and horizon $h\in\{1,2,4\}$ steps, the forecaster with the lowest tune error among ridge regression,
+random forest and gradient-boosted trees is used, with lagged load, PV and net load, rolling means and calendar
+terms as inputs, and a multilayer perceptron in a robustness run. Code, settings, seeds and results are available at
+\url{github.com/tanvirul-1230/cccp-netload}.
+
+\subsection{Disturbances, Control Windows and Event Traces}
+Disturbances are injected into the test period. A PV loss scales PV by $1-s$, a load step adds
+$s\,\tilde\ell_{24\mathrm{h}}$, with $\tilde\ell_{24\mathrm{h}}$ the median load over the 24~h before the onset, and a
+combined event does both, for $s\in\{0.25,0.5,0.75\}$ and durations $d\in\{30,60,120\}$~min. Twenty onsets per
+configuration and household, \nExt{} events in total, are drawn among onsets with complete data from 26~h before
+to 4~h after the event and, for PV events, a mean PV of at least 0.2~kW over the event. Two held-out sets, used for
+no choice, add \nTrip{} complete PV trips ($s=1$) and \nEV{} load steps of 3.7~kW (single-phase 16-A charger), 20 per household and duration. Each event is injected
+alone and passes through the same forecaster, difficulty model and score, with the ACI and rolling states at its
+onset from the run without injection. Interval widths and scores also change without any
+disturbance, with the time of day and the weather. Each injected window is therefore compared with its control
+window: the same household, horizon and issue times, forecast from the record without injection. The comparison
+uses the log ratio of the mean width over issue times in $[t_s,t_s+d)$, injected over control, and the net
+adaptation rate: the share of events whose width somewhere in $[t_s,t_s+d)$ exceeds 1.25 times the median of the eight pre-event widths,
+minus that share in the control windows. The 120-min PV losses are also traced from 60~min before to 180~min after
+the onset.
+
+\subsection{Metrics and Statistics}
+Accuracy is measured by coverage, the share of outcomes in their intervals, and by the interval score
+\cite[eq.~(43)]{gneiting}
+\begin{equation}
+S=(u-l)+\tfrac{2}{\alpha}(l-y)\,\mathbf{1}\{y<l\}+\tfrac{2}{\alpha}(y-u)\,\mathbf{1}\{y>u\}, \label{eq:is}
+\end{equation}
+for an interval $[l,u]$ and outcome $y$, averaged and divided by the test-period range of the household's net load. All scores
+below are these normalised scores. In-event scores use the targets whose issue and target times lie in $[t_s,t_s+d)$, so 30-min events enter
+only at $h=15$~min and 60-min events at 15 and 30~min, and the recovery score uses the target at $t_s+d$. Method $A$ is compared with method $B$ by $\Delta=\frac{1}{3}\sum_{k}(\bar S^A_k/\bar S^B_k-1)$, with
+$\bar S_k$ the mean score in household $k$ over all horizons, so $\Delta<0$ favours $A$. Intervals, error bars and bands are 95\% bootstrap intervals from
+4000 resamples of household-days within each household. Normal-operation scores are compared per household and horizon by Diebold--Mariano tests
+\cite[Sec.~2.1]{diebold} with a Newey--West variance \cite[eq.~(5)]{newey} over 24 lags (96 as a check) and Holm's
+correction over the nine tasks \cite{holm}, and a count $a/b/c$ gives the tasks with a significantly lower, not
+significantly different and significantly higher score.
+
+\subsection{Selection of Gains and Steps}
+Gains $\beta$ and steps $\gamma$ are selected on \nDev{} events injected into the development split,
+which also sets the quantile.
+Within each family, the rule admits parameters whose score over the development period without injection is
+within 2\% of the family's best and selects the one with the lowest in-event score on these events, ties
+going to the smaller value. The grids are
+$\beta\in\{0,0.25,0.5,1,2,4\}$ (CC-CP), $\{0,0.25,0.5,1,2\}$ (CC-LACP), $\{0,0.25,0.5,1\}$ (other variants) and
+$\gamma\in\{0.005,0.01,0.02,0.05,0.1,0.2,0.3,0.5\}$. The step grid was extended beyond 0.1 and again beyond 0.2
+when the rule selected its largest value, before any test event was scored. Without injection, smaller
+steps score \devACIlowMin{} to \devACIlowMax{} above the best, and only \devACIadm{} qualify. The quantile is then taken on
+the calibration split, which no selection uses. As a reference, ACI runs with the step in
+$\{0.005,0.01,0.02,0.05\}$ with tune-split coverage closest to $1-\alpha$.
+
+\subsection{Battery Reserve}
+A 5-kWh battery with 2.5-kW power limits, a state-of-charge range of 10--90\% (lower limit $e_{\min}=0.5$~kWh), efficiency $\eta=0.95$ and an
+initial state of charge of 50\% is simulated at the 15-min horizon from 6~h before each onset to 2~h after the
+event. At issue time $t$ it holds back $e_{\min}+\max(u_t,0)\,\Delta t/\eta$, with $\Delta t=15$~min and $u_t$ the upper
+bound of the two-sided 90\% interval for the next step (the point forecast for a point reserve), serves the present deficit from the energy above this
+reserve and charges from PV surplus. The reserve adequacy is the share of steps in $[t_s,t_s+d)$ with
+$\eta\,(e_t-e_{\min})\ge\min\{[y_{t+1}]^+,\bar P\}\,\Delta t$, with $e_t$ the stored energy after dispatch and
+$\bar P$ the power limit. The 3.7-kW steps exceed
+it and are left out. The rule has no tariff or degradation model.
+
+\section{Results}\label{sec:results}
+\begin{table*}[t]
+\caption{Coverage and normalised interval score in normal operation and inside disturbances (\nExt{} events),
+and in-event score against LACP on the held-out sets (\nTrip{} PV trips, \nEV{} 3.7-kW steps). Bold: lowest score per
+household at three decimals, excluding the control. Changes: household mean of the relative change against LACP.
+$^{\dagger}$LACP widened per event to the mean in-event width of CC-LACP, a control that knows the event
+window.}
+\label{tab:results}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4.2pt}
+\renewcommand{\arraystretch}{0.90}\input{tables/table_results.tex}
+\end{table*}
+
+\begin{figure*}[t]
+\centering
+\begin{minipage}[t]{252pt}\centering
+\includegraphics{figures/fig_households.pdf}
+\caption{PV loss by household: (a) log width ratio, injected over control window, (b) in-event score against
+LACP.}
+\label{fig:households}
+\end{minipage}\hfill
+\begin{minipage}[t]{252pt}\centering
+\includegraphics{figures/fig_eventtime.pdf}
+\caption{Through a 120-min PV loss (shaded): (a) log width ratio by issue time, (b) coverage by target time.
+Error bars at staggered times.}
+\label{fig:eventtime}
+\end{minipage}
+\end{figure*}
+
+\subsection{Q1: Learned Difficulty Scale under PV Loss}
+\emph{Fig.~\ref{fig:households}---PV loss by household:} LACP narrows under PV loss in H3 and H4, widens in H6,
+and is narrower than in the control window in \narrowLACP{} of all PV-loss windows. The consistency factor widens
+LACP in every household. CC-LACP scores lower than LACP under PV loss in H4 and H6 and not distinguishably in H3,
+and ACI widens most in H6.
+
+\emph{Fig.~\ref{fig:eventtime}---Interval through a loss:} The first disturbed targets are forecast before the
+onset, and every method covers only \covOnsetMin{} to \covOnsetMax{} of them. ACI widens most from the first
+disturbed issue time, as its first update uses the uncovered target at the onset, and stays wide until the loss
+ends. The CC-CP widening peaks at the onset and fades as the normal-behaviour models follow the new PV level, and
+LACP stays narrower than in the control window. In the first hour CC-LACP covers \covHourCCLACP{} of the targets,
+\covHourDCCLACPvsLACP{} \covHourDCCLACPvsLACPCI{} more than LACP and \covHourDCCLACPvsACI{}
+\covHourDCCLACPvsACICI{} more than ACI.
+
+\emph{Fig.~\ref{fig:severity}---Depth of the loss:} The LACP width ratio falls as the loss deepens and drops below
+one at $s=0.75$. The width added by the factor grows with the loss, so the CC-LACP ratio stays level, while the
+CC-CP and ACI ratios rise.
+
+\subsection{Q2: Accuracy with the Consistency Factor}
+\begin{figure*}[t]
+\centering
+\begin{minipage}[t]{252pt}\centering
+\includegraphics{figures/fig_severity.pdf}
+\caption{Log width ratio under PV loss against the loss severity.}
+\label{fig:severity}
+\end{minipage}\hfill
+\begin{minipage}[t]{252pt}\centering
+\includegraphics{figures/fig_bands.pdf}
+\caption{Normal-operation coverage by consistency band. Width-matched: SCP at the mean width of CC-CP.}
+\label{fig:bands}
+\end{minipage}
+\end{figure*}
+
+\emph{Table~\ref{tab:results}---Static calibration:} In normal operation CC-LACP changes the LACP score by
+\cleanrelCCLACP, with counts \dmCCLACPvsLACP. Inside disturbances it changes it by
+\relCCLACPvsLACP{} \relCCLACPvsLACPCI, from \relCCLACPvsLACPHSix{} in H6 to \relCCLACPvsLACPHThree{} in H3, and the
+recovery-target score by \recrelCCLACP. CC-LACP scores \relCCLACPvsWM{} \relCCLACPvsWMCI{} against
+the width-matched control, which knows the event window, so the gain lies in how much width the factor adds. On the held-out complete trips it
+changes the LACP score by \triprelCCLACP{} \triprelCCLACPCI{} and raises coverage from \tripLACPPICP{} to
+\tripCCLACPPICP. The 3.7-kW steps fall outside most intervals, and the factor lowers their LACP score by
+\evabsCCLACP, against \evabsACI{} for ACI.
+
+\emph{Where the factor lowers the score:} The factor trades width for misses. Over the \nCells{} event cells (household, type,
+severity, duration, horizon), its change of the LACP in-event score rises with the in-event
+coverage of LACP (rank correlation \cellRho, \cellRhoDev{} on development events). It runs from \binLow{}
+\binLowCI{} where LACP covers less than 0.75 of the disturbed targets to \binHigh{} \binHighCI{} where it covers 0.90 or more,
+and the fitted change is zero near \cellCross. LACP covers \covLACPinHThree{} of the in-event targets in H3,
+\covLACPinHFour{} in H4 and \covLACPinHSix{} in H6, so in H3 the added width (\dWidthHThree{} of the LACP score)
+outweighs the misses removed (\dPenHThree). There the change is \relHThreePV{} under PV loss and \relHThreeLoad{}
+and \relHThreeComb{} under load steps and combined events.
+
+\emph{Fig.~\ref{fig:bands}---Normal operation by consistency score:} With bands at zero and at the calibration
+median of the positive scores, SCP covers \bandZeroSCP{} of the targets at zero score and \bandHighSCP{} in the
+high band, so the score marks periods of larger forecast error. CC-CP and CC-LACP raise high-band coverage to
+\bandHighCCCP{} and \bandHighCCLACP, and a fixed interval with the mean width of CC-CP reaches \bandHighWMS, so the
+gain comes from where the width is placed. CC-LACP covers less than LACP at zero score.
+
+\begin{figure*}[t]
+\centering
+\begin{minipage}[t]{252pt}\centering
+\includegraphics{figures/fig_tradeoff.pdf}
+\caption{Gain and step sweeps, from the smallest value to the arrow (off range: $\gamma=0.5$, CC-CP $\beta=4$,
+CC-LACP $\beta=2$).}
+\label{fig:tradeoff}
+\end{minipage}\hfill
+\begin{minipage}[t]{252pt}\centering
+\includegraphics{figures/fig_horizon.pdf}
+\caption{In-event score against LACP by horizon, 120-min events, first 45~min.}
+\label{fig:horizon}
+\end{minipage}
+\end{figure*}
+
+\emph{Fig.~\ref{fig:tradeoff}---Gains and steps:} Only CC-LACP with the selected gain scores below LACP inside
+events with a normal-operation score within 2\%, and larger gains raise both scores. ACI stays above LACP inside
+events at every step, and CC-CP at least 13\% above it for every gain. The factor lowers both scores of ACI at the
+smallest steps and raises both at the selected step, where the rule sets its gain to zero.
+
+\begin{table}[t]
+\caption{Variants of the consistency signal, gains selected by the same rule. Net adaptation to injected PV
+loss and load steps and in-event score against LACP. $^{*}$95\% interval excludes zero.}
+\label{tab:ablation}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.4pt}
+\renewcommand{\arraystretch}{0.90}\input{tables/table_ablation.tex}
+\end{table}
+
+\emph{Table~\ref{tab:ablation}---Signal design:} With the constant base, the PV channel carries the response to
+PV loss and the load channel the response to load steps, so the maximum in \eqref{eq:rho} retains both. Models
+that see only the day-lag value and the calendar lose the PV-loss response, and a persistence residual responds
+less and scores worse. On the LACP scale $s(x_t)$ carries the load-step response, the PV channel alone gives
+nearly the gain of both, and the persistence residual and the indicator give less.
+
+\subsection{Q3: Error-Driven Recalibration}
+\emph{Table~\ref{tab:results}---Rolling and adaptive calibration:} Against ACI with $\gamma=\selACI$, CC-LACP
+changes the in-event score not distinguishably, by \relCCLACPvsACI{} \relCCLACPvsACICI, with opposite signs by
+household, and has normal-operation counts \dmCCLACPvsACI. ACI covers more inside disturbances (\inACIPICP{} against
+\inCCLACPPICP) at a normal-operation score \abscleanrelACI{} above LACP, and the clip in \eqref{eq:aci} holds its
+normal-operation coverage at \cleanACIPICP{} (\unclipPICP{} unclipped, at a higher score). Inside disturbances
+CC-LACP scores \absrelCCLACPvsACIL{} below ACI on LACP and \absrelCCLACPvsROLLLACP{} below rolling LACP.
+Recalibrating on recent scores lifts normal-operation coverage from \cleanStaticMin--\cleanStaticMax{} (static,
+lowered by drift) to about 0.90 and leaves the factor no significant in-event gain
+(\relROLLCCLACPvsROLLLACP{} \relROLLCCLACPvsROLLLACPCI{} in the rolling window, \relACICCLvsACIL{}
+\relACICCLvsACILCI{} in ACI on LACP). In both, the factor still widens the interval at the onset of a 120-min loss,
+raises first-hour coverage by \covHourFROLL{} and \covHourFACIL, and changes the 3.7-kW-step score by \evfacROLL{}
+and \evfacACIL. The net PV-loss adaptation of CC-CP and ACI is not distinguishable, and without injection the width
+exceeds 1.25 times its pre-event median in \faLACP, \faCCLACP{} and \faACI{} of LACP, CC-LACP and ACI windows.
+
+\emph{Fig.~\ref{fig:horizon}---Forecast horizon:} CC-LACP stays below LACP at every horizon,
+while ACI moves from \hzACIShort{} at 15~min to \hzACILong{} at 60~min and ACI on LACP from \hzACILShort{} to
+\hzACILLong, consistent with feedback that arrives $h$ steps late.
+
+\subsection{Q4: Battery Reserve}
+\begin{table}[t]
+\caption{Battery reserve at the 15-min horizon: reserve adequacy, shortfall (uncovered next-step energy) and
+grid import (kWh per event). Bold: best interval reserve.}
+\label{tab:battery}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{0.95}\input{tables/table_battery.tex}
+\end{table}
+
+\emph{Table~\ref{tab:battery}---Reserve adequacy:} Every interval reserve covers the next-step demand in
+\batAdqIntMin{} to \batAdqIntMax{} of the disturbed steps, against \batAdqPoint{} for the point reserve, with at
+most \batImpRise{} more grid import. The rolling and ACI reserves on the LACP and CC-LACP scores have the highest
+adequacy under PV loss and trips. The factor raises the LACP adequacy under PV loss and trips by less than 0.01 and
+the ACI-on-LACP adequacy under trips by \batTripAdqACICCLvsACILAbs, and lowers the load-step adequacy slightly on
+all three bases. Under load steps SCP and ACI rank highest.
+
+\subsection{Robustness and Limitations}
+CC-LACP changes the LACP in-event score by \robclipCCLACPvsLACP{} \robclipCCLACPvsLACPCI{} with load clipped at
+zero, by \robmlpCCLACPvsLACP{} \robmlpCCLACPvsLACPCI{} with the neural backbone and by \robfrzCCLACPvsLACP{}
+\robfrzCCLACPvsLACPCI{} on a second, independent set of two onsets per configuration and household (\nFrozen{} of 162, one follows a
+data gap). The limitations and how they are
+addressed are:
+\begin{itemize}
+\item \emph{Simulated disturbances.} No inverter status is recorded, so disturbances are injected through the
+same models as the record and compared with their control windows. Held-out trips and 3.7-kW steps test larger
+events.
+\item \emph{Three households.} Results are reported per household with intervals over household-days. Selected on
+two households and tested on the third, the gain changes the score by \lohorelHThree, \lohorelHFour{} and
+\lohorelHSix{} in H3, H4 and H6.
+\item \emph{Household dependence.} Where the unmodified interval already covers the disturbance, as in most H3
+events, the factor raises the score. Selection per household on development data sets the gain to zero in H3,
+where it lowers neither score, and in H6, where it raises the normal-operation score beyond the 2\% tolerance.
+\item \emph{Serial dependence.} Time series and disturbances violate exchangeability, so coverage is measured and
+score differences carry a Newey--West variance.
+\item \emph{Lasting losses.} During a lasting loss the score returns to its control level within about 90~min. With
+a rolling window or ACI, which follow lasting shifts, the factor still widens the interval at the onset.
+\end{itemize}
+
+\section{Conclusion}\label{sec:conclusion}
+Conformal intervals for the net load of three households were scaled by a measured consistency score of PV and load and
+tested on injected disturbances, held-out trips and load steps, and a battery reserve. A learned difficulty
+scale narrows in most PV losses, the more so the deeper the loss. The consistency factor counteracts this
+narrowing, lowers the interval score during disturbances and raises first-hour coverage at a slightly higher
+normal-operation score, the more so the more of the disturbance the unmodified interval misses. Inside disturbances
+it is not distinguishable from fixed-step ACI, whose normal-operation score is higher, and once the quantile follows
+recent scores it gives no significant in-event gain. For a battery reserve the calibration method matters more.
+Recalibration on recent scores thus comes first, and the factor adds first-hour coverage and a lower score
+under large load steps, so that the interval follows a PV loss through a measured departure from normal behaviour
+and not only through past forecast errors. Future work will test the score on recorded inverter faults and more
+households and combine it with online step tuning.
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+\end{document}
